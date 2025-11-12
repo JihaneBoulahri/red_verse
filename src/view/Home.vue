@@ -1,12 +1,21 @@
 <template>
-  <div class="text-center mt-10">
-    <h1 class="text-4xl font-bold text-blue-500">Bienvenue sur la page Home</h1>
-    <p class="mt-4 text-gray-400">Ceci est un exemple de page Vue.</p>
+  <div>
+    <NavBar />
+    <inscription />
   </div>
 </template>
 
 <script>
+import NavBar from '../components/NavBar.vue'
+import Inscription from '../components/Inscription.vue';
+
+
 export default {
   name: 'Home',
-};
+  components: {
+    NavBar,
+    Inscription,
+  },
+}
 </script>
+
