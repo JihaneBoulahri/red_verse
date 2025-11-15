@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <div class="min-h-screen bg-black text-white overflow-x-hidden">
     <!-- Section principale -->
     <section class="flex flex-col md:flex-row items-center justify-between px-10 md:px-24 ">
@@ -20,7 +21,7 @@
         >
           Start Listening
         </button> -->
-        <button
+        <button @click="$router.push({ name: 'Signup' })"
           class="mt-10 bg-red-600 hover:bg-red-700 px-8 py-3 rounded-full font-semibold transition-all duration-300"
         >
           Start Listening
@@ -58,7 +59,12 @@
 </template>
 
 <script>
+import NavBar from '../components/NavBar.vue'
+
 export default {
   name: "Home",
+  components: {
+    NavBar,
+  }
 };
 </script>
