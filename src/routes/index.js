@@ -11,14 +11,24 @@ const router = createRouter({
                 [
                     { 
                         path: '', 
-                        name: 'Home', 
-                        component:()=> import('../view/Home.vue'),
+                        name: 'Accueil', 
+                        component:()=> import('../view/Accueil.vue'),
                     },
                     {
                         path: 'signup',
                         name: 'Signup',
                         component:()=> import('../view/Inscription.vue'),
                         meta: { showNav: false }
+                    },
+                    {
+                        path: 'aPropos',
+                        name: 'aPropos',
+                        component:()=> import('../view/APropos.vue'),
+                    },
+                    {
+                        path: 'contact',
+                        name: 'Contact',
+                        component:()=> import('../view/Contact.vue'),
                     }
                 ]
         },

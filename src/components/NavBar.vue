@@ -11,11 +11,9 @@
       <h2>RedVerse</h2>
     </div>
     <ul class="nav-links">
-      <li><a href="#">Accueil</a></li>
-      <li><a href="#">À propos</a></li>
-      <li><a href="#">Menu</a></li>
-      <li><a href="#">Playlist</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><router-link :to="{ name: 'Accueil' }">Accueil</router-link></li>
+      <li><router-link :to="{ name: 'aPropos' }">À propos</router-link></li>
+      <li><router-link :to="{ name: 'Contact' }">Contact</router-link></li>
     </ul>
   </nav>
 </template>
@@ -55,14 +53,14 @@
   padding: 0;
 }
 
-.nav-links a {
+.nav-links router-link {
   color: white;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links router-link:hover {
   color: #ff1a1a;
 }
 </style>
