@@ -1,0 +1,29 @@
+.modal{
+  margin: 70px auto;
+  width: 70%;
+  max-width: 850px;
+  padding: 40px;
+  display: flex;
+  gap: 35px;
+  background: transparent;
+  border-radius: 25px;
+  border: 1px solid #ffffff33;
+  box-shadow: 0 0 25px #ff000066;
+  animation: fadeModal 1.3s ease forwards;
+  animation: fadeModal 1.3s ease forwards, beat 3s ease-in-out infinite;
+
+}
+@keyframes fadeModal {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* modal when width is small */
+@media (max-width: 768px) {
+  .main-modal {
+    flex-direction: column;
+    width: 90%;
+    padding: 25px;
+  }
+
+  .divider { display: none; }
+}

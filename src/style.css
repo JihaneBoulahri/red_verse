@@ -1,1 +1,4 @@
+@import "./css/modal.css";
+@import "./css/contact.css";
+@import "./css/toast.css";
 @import "tailwindcss";
