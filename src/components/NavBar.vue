@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar bg-black/20 backdrop-blur-sm fixed w-full top-0 left-0 z-50">
     <div class="logo">
-      <router-link :to="{ name: 'Home' }">
+      <router-link :to="{ name: 'Accueil' }">
       <img
           src="/src/assets/logo.png"
           alt="RedVerse Logo"

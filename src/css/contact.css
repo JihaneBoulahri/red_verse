@@ -1,0 +1,92 @@
+/* ======== SLOGAN ======== */
+
+.title-hero {
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-align: center;
+  animation: fadeSlide 1s ease forwards;
+  text-shadow: 0 0 12px #ff000099;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.red { color: #ff0000; }
+/* ======== MODAL ======== */
+
+
+
+.side { flex: 1; }
+
+/* Titles */
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff0000;
+  text-shadow: 0 0 12px #ff0000aa;
+  margin-bottom: 18px;
+}
+
+/* Divider */
+.divider {
+  width: 2px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+}
+
+/* Inputs */
+.label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  color: white;
+  transition: 0.25s ease;
+}
+
+.input:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 14px #ff0000aa;
+  transform: scale(1.02);
+}
+
+.textarea { resize: none; }
+
+/* Button */
+.btn-send {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  background: linear-gradient(90deg, #ff0000, #bb0000);
+  border-radius: 40px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0 0 15px #ff0000aa;
+}
+
+.btn-send:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #ff0000cc;
+}
+
+/* Info text */
+.info-text {
+  font-size: 1rem;
+  opacity: 0.85;
+  line-height: 1.7;
+}
+
+
