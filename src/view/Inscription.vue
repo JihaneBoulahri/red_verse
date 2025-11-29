@@ -1,7 +1,7 @@
 <template>
   <div
     class="min-h-screen flex items-center justify-center bg-cover bg-center relative"
-    :style="{ backgroundImage: `url('/src/assets/logo.jpg')` }"
+    :style="{ backgroundImage: `url('/src/assets/logo.png')` }"
   >
     <!-- Overlay sombre -->
     <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
@@ -13,7 +13,7 @@
       <!-- Logo -->
       <div class="flex justify-center mb-8">
         <img
-          src="/src/assets/logo.jpg"
+          src="/src/assets/logo.png"
           alt="RedVerse Logo"
           class="w-20 h-20 rounded-full shadow-lg shadow-red-600/50 border-2 border-red-500/50"
         />
@@ -119,7 +119,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { isValidEmail, isValidPassword } from "../routes/Valide.js";
+import { isValidEmail, isValidPassword } from "../services/Valide.js";
 
 const tab = ref("signin");
 const username = ref("");
