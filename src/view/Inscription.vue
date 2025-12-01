@@ -1,7 +1,8 @@
+
 <template>
-  <div
+  <div v-if="!isLoggedIn" 
     class="min-h-screen flex items-center justify-center bg-cover bg-center relative"
-    :style="{ backgroundImage: `url('/src/assets/logo.jpg')` }"
+    :style="{ backgroundImage: `url('/src/assets/logo.png')` }"
   >
     <!-- Overlay sombre -->
     <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
@@ -13,7 +14,7 @@
       <!-- Logo -->
       <div class="flex justify-center mb-8">
         <img
-          src="/src/assets/logo.jpg"
+          src="/src/assets/logo.png"
           alt="RedVerse Logo"
           class="w-20 h-20 rounded-full shadow-lg shadow-red-600/50 border-2 border-red-500/50"
         />
@@ -24,7 +25,7 @@
         RedVerse
       </h1>
       <p class="text-center text-gray-400 text-sm mb-8">
-        {{ tab === "signin" ? "Connectez-vous à votre compte" : "Créez un nouveau compte" }}
+        {{ tab === "signin" ? "Sign in to your account" : "Create a new account" }}
       </p>
 
       <!-- Onglets -->
@@ -115,67 +116,170 @@
       </div>
     </div>
   </div>
+
+  <!-- Afficher la sidebar et contenu après connexion -->
+  <div v-else class="logged-in-layout">
+    <SideBar /><Dashboard/>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { isValidEmail, isValidPassword } from "../routes/Valide.js";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import SideBar from "../components/SideBar.vue";
+import { isValidEmail, isValidPassword } from "../services/Valide.js";
+import Dashboard from "./Dashboard.vue";
 
+const handleSignup = async () => {
+
+  localStorage.setItem("redverse_user", JSON.stringify({ username }))
+
+  router.push('/dashboard')
+}
+
+
+const router = useRouter();
+const isLoggedIn = ref(false);
 const tab = ref("signin");
 const username = ref("");
 const email = ref("");
 const password = ref("");
 const staySignedIn = ref(false);
+const loading = ref(false);
 
 const emailError = ref("");
 const passwordError = ref("");
 
+// Vérifier si l'utilisateur est déjà connecté au chargement
+onMounted(() => {
+  const user = localStorage.getItem('redverse_user');
+  if (user) {
+    try {
+      const userData = JSON.parse(user); 
+      isLoggedIn.value = true;
+      username.value = userData.username || 'User';
+    } catch (e) {
+      isLoggedIn.value = false;
+    }
+  }
+});
+
+const clearErrors = () => {
+  emailError.value = '';
+  passwordError.value = '';
+};
+
 //  Fonction de validation + envoi au serveur JSON
 const handleSubmit = async () => {
-  emailError.value = "";
-  passwordError.value = "";
+  clearErrors();
+  loading.value = true;
+  router.push('/dashboard');
 
-  if (!isValidEmail(email.value)) {
-    emailError.value = "Email invalide (ex: user@example.com)";
-  }
-
-  if (!isValidPassword(password.value)) {
-    passwordError.value =
-      "Mot de passe ≥ 8 caractères, avec 1 majuscule et 1 chiffre.";
-  }
-
-  if (emailError.value || passwordError.value) return;
-
-  //  Mode connexion
-  if (tab.value === "signin") {
-    alert(`Bienvenue, ${username.value}!`);
-    return;
-  }
-
-  //Mode création de compte → envoi vers server.js
-  const newUser = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  };
 
   try {
-    const response = await fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser),
+    // Validation
+    if (tab.value === 'signup') {
+      if (!username.value.trim()) {
+        emailError.value = 'Username is required';
+        loading.value = false;
+        return;
+      }
+    }
+
+    if (!isValidEmail(email.value)) {
+      emailError.value = "Invalid email (e.g., user@example.com)";
+      loading.value = false;
+      return;
+    }
+
+    if (!isValidPassword(password.value)) {
+      passwordError.value =
+        "Password must be ≥ 8 characters with 1 uppercase letter and 1 digit.";
+      loading.value = false;
+      return;
+    }
+
+    // API Call
+    let endpoint = '';
+    let payload = {};
+
+    if (tab.value === 'signup') {
+      endpoint = '/signup';
+      payload = { username: username.value, email: email.value, password: password.value };
+    } else if (tab.value === 'signin') {
+      endpoint = '/signin';
+      payload = { email: email.value, password: password.value };
+    }
+
+    const response = await fetch('http://localhost:3000' + endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-    alert("Compte créé avec succès !");
+    const data = await response.json();
 
-    username.value = "";
-    email.value = "";
-    password.value = "";
+    if (!response.ok) {
+      if (data.message) {
+        alert('❌ ' + data.message);
+      } else {
+        alert('❌ Erreur serveur');
+      }
+      loading.value = false;
+      return;
+    }
 
+    /* Success - save user and show sidebar
+    alert('✅ ' + data.message);
+
+    // Save user data
+    if (tab.value === 'signin' && data.user) {
+      if (staySignedIn.value) {
+        localStorage.setItem('redverse_user', JSON.stringify(data.user));
+      } else {
+        localStorage.setItem('redverse_user', JSON.stringify(data.user));
+      }
+      username.value = data.user.username || email.value;
+    } else if (tab.value === 'signup') {
+      localStorage.setItem('redverse_user', JSON.stringify({ username: username.value, email: email.value }));
+    }
+
+    // Show the sidebar by setting isLoggedIn
+    isLoggedIn.value = true;
+    
+    // Reset fields
+    email.value = '';
+    password.value = '';*/
+    // Success - save user and show sidebar
+alert('✅ ' + data.message);
+
+// Save user data
+if (tab.value === 'signin' && data.user) {
+  localStorage.setItem('redverse_user', JSON.stringify(data.user));
+  username.value = data.user.username || email.value;
+
+  // Show dashboard + sidebar
+  isLoggedIn.value = true;
+  router.push('/dashboard'); // redirect to dashboard
+} 
+else if (tab.value === 'signup') {
+  localStorage.setItem('redverse_user', JSON.stringify({ username: username.value, email: email.value }));
+
+  // Show dashboard + sidebar
+  isLoggedIn.value = true;
+  router.push('/dashboard'); // redirect to dashboard
+}
+
+// Reset fields
+email.value = '';
+password.value = '';
+
+    
   } catch (error) {
-    alert("Erreur serveur !");
-    console.error(error);
+    console.error('❌ Error:', error);
+    alert('❌ Network error: ' + error.message);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -190,5 +294,49 @@ const handleSubmit = async () => {
 body {
   margin: 0;
   background-color: #000;
+}
+
+/* Layout après connexion */
+.logged-in-layout {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 100px 40px 40px;
+  width: calc(100% - 280px);
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, rgba(255, 26, 26, 0.1) 0%, rgba(255, 68, 68, 0.05) 100%);
+  border: 1px solid rgba(255, 26, 26, 0.2);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #ff1a1a, #ff6666);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-section p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 80px 20px 20px;
+  }
 }
 </style>

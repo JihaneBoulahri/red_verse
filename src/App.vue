@@ -1,5 +1,10 @@
 <template>
-  <router-view />
+ <!--<router-view /> -->
+    <Sidebar />
+
+  <main class="main-content">
+    <router-view />
+  </main>
 </template>
 
 <script>

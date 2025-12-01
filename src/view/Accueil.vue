@@ -21,8 +21,8 @@
         >
           Start Listening
         </button> -->
-        <button @click="$router.push({ name: 'Signup' })"
-          class="mt-10 bg-red-600 hover:bg-red-700 px-8 py-3 rounded-full font-semibold transition-all duration-300"
+        <button @click="$router.push({ name: 'Signup' })" 
+          class="mt-10 bg-red-600 hover:bg-red-700 px-8 py-3 rounded-full font-semibold transition-all duration-300"
         >
           Start Listening
         </button>
