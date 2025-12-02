@@ -16,16 +16,27 @@
       <router-view />
     </main>
   </div>
-</template>-->
+</template>
 <template>
   <div class="flex">
+    <NavBar v-if="showNav" />
     <SidBar v-if="route.meta.showSidebar" />
 
     <main class="flex-1">
       <router-view />
     </main>
   </div>
+</template>-->
+<template>
+  <NavBar v-if="showNav" />
+  <aside class="sidebar">
+  </aside>
+
+  <main class="dashboard">
+    <router-view />
+  </main>
 </template>
+
 
 
 <script setup>
@@ -51,38 +62,4 @@ const showSidebar = computed(() => {
 
 </script>
 
-<style scoped>
-.main-layout {
-  display: flex;
-  min-height: 100vh;
-}
 
-.main-content {
-  flex: 1;
-  padding-top: 70px;
-  width: 100%;
-  /*margin-left: 0;*/
-  transition: margin-left 0.3s ease;
-}
-.with-sidebar .main-content {
-  margin-left: 280px;
-  width: calc(100% - 280px);
-}
-/*
-.main-layout:has(> .sidebar) .main-content {
-  margin-left: 280px;
-  width: calc(100% - 280px);
-}*/
-
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .main-layout:has(> .sidebar) .main-content {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-</style>

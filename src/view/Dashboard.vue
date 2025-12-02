@@ -128,3 +128,14 @@ const playTrack = (track) => {
   }
 };
 </script>
+<style>
+.dashboard {
+  margin-left: 20%; 
+  width: 80%;
+  padding: 20px;
+  background: #0d0e14;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+</style>
