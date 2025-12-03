@@ -70,9 +70,9 @@ export default {
 </script>
 <style>
 .accueil-main {
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-  width: 100% !important;
+  margin-left: 0 ;
+  padding-left: 0 ;
+  width: 100% ;
 }
 </style>
 

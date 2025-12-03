@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '../layout/MainLayout.vue';
+import Playlists from '../view/Playlist.vue'
+import CreatePlaylist from '../view/CreatePlaylist.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -51,6 +53,12 @@ const router = createRouter({
                         component: () => import('../view/Playlist.vue'),
                         meta: { showSidebar: true }
                         
+                    },
+                    {
+                        path: '/playlist/create',
+                        name: 'CreatePlaylist',
+                        component: () => import('../view/CreatePlaylist.vue'),
+                        meta: { showSidebar: true }
                     },
                     {
                         path: '/album/:id',

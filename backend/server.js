@@ -132,5 +132,54 @@ app.post('/forgot-password', (req, res) => {
     res.status(500).json({ success: false, message: "Erreur serveur lors de la récupération du mot de passe" });
   }
 });
+/* 
+import fetch from "node-fetch";
+
+pp.get('/api/deezer/playlists', async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/2529/playlists?output=json",
+      {
+        headers: {
+          "Origin": "localhost", 
+          "x-requested-with": "XMLHttpRequest"
+        }
+      }
+    );
+    
+    const data = await response.json();
+    res.json(data);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur Deezer Playlists" });
+  }
+}); */
+import fetch from "node-fetch";
+
+pp.get('/api/deezer/playlists', async (req, res) => {
+  try {
+    const url =
+      "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/2529/playlists?output=json";
+
+    const response = await fetch(url, {
+      headers: {
+        "Origin": "localhost",
+        "x-requested-with": "XMLHttpRequest"
+      }
+    });
+
+    const data = await response.json();
+    res.json(data);
+
+  } catch (error) {
+    console.error("Deezer Playlist Error:", error);
+    res.status(500).json({ error: "Erreur Deezer Playlists" });
+  }
+});
+
+
 
 app.listen(PORT, () => console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`));
+
+
