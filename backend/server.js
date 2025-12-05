@@ -133,4 +133,25 @@ app.post('/forgot-password', (req, res) => {
   }
 });
 
+app.get('/api/users', (req, res) => {
+  try {
+    const users = readUsers();
+    res.json(users);
+  } catch (err) {
+    console.error('❌ Erreur récupération utilisateurs :', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs' });
+  }
+});
+
+app.get('/api/deezer/tracks', async (req, res) => {
+  try {
+    const response = await fetch('https://api.deezer.com/chart/0/tracks');
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('❌ Erreur Deezer proxy:', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération des pistes' });
+  }
+});
+
 app.listen(PORT, () => console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`));

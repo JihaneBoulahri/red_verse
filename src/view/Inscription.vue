@@ -1,117 +1,138 @@
 <template>
   <div
-    class="min-h-screen flex items-center justify-center bg-cover bg-center relative"
-    :style="{ backgroundImage: `url('/src/assets/logo.png')` }"
+    class="min-h-screen bg-cover bg-center"
+    :style="{ backgroundImage: `url(${bg})` }"
   >
-    <!-- Overlay sombre -->
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+    <div class="min-h-screen text-white px-4">
+      
+      <!-- Modal Inscription -->
+      <div class="modal main-modal">
+        <!-- Left Side - Formulaire -->
+        <div class="left-side">
+          <h2 class="section-title">
+            {{ tab === "signin" ? "Connexion" : "Inscription" }}
+          </h2>
 
-    <!-- Formulaire centré -->
-    <div
-      class="relative z-10 w-full sm:w-[380px] md:w-[420px] lg:w-[450px] bg-gradient-to-br from-gray-900/95 to-black/95 border border-red-500/40 rounded-2xl text-white p-10 shadow-2xl shadow-red-600/30"
-    >
-      <!-- Logo -->
-      <div class="flex justify-center mb-8">
-        <img
-          src="/src/assets/logo.png"
-          alt="RedVerse Logo"
-          class="w-20 h-20 rounded-full shadow-lg shadow-red-600/50 border-2 border-red-500/50"
-        />
-      </div>
+          <!-- Username (Sign Up Only) -->
+          <div v-if="tab === 'signup'">
+            <label class="label">Nom d'utilisateur</label>
+            <input
+              v-model="username"
+              type="text"
+              placeholder="Choisissez un nom unique"
+              class="input"
+              @blur="validateUsername"
+            />
+            <p v-if="errors.username" class="error-text">{{ errors.username }}</p>
+          </div>
 
-      <!-- Titre -->
-      <h1 class="text-center text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
-        RedVerse
-      </h1>
-      <p class="text-center text-gray-400 text-sm mb-8">
-        {{ tab === "signin" ? "Connectez-vous à votre compte" : "Créez un nouveau compte" }}
-      </p>
-
-      <!-- Onglets -->
-      <div class="flex justify-center gap-1 mb-10">
-        <button
-          :class="[
-            'px-6 py-2.5 font-semibold transition-all duration-300 rounded-t-lg',
-            tab === 'signin' 
-              ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-600/50' 
-              : 'bg-gray-800 text-gray-400 hover:text-gray-200 hover:bg-gray-700'
-          ]"
-          @click="tab = 'signin'"
-        >
-          SIGN IN
-        </button>
-        <button
-          :class="[
-            'px-6 py-2.5 font-semibold transition-all duration-300 rounded-t-lg',
-            tab === 'signup' 
-              ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-600/50' 
-              : 'bg-gray-800 text-gray-400 hover:text-gray-200 hover:bg-gray-700'
-          ]"
-          @click="tab = 'signup'"
-        >
-          SIGN UP
-        </button>
-      </div>
-
-      <!-- Formulaire -->
-      <form @submit.prevent="handleSubmit" class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">Username</label>
-          <input
-            v-model="username"
-            type="text"
-            placeholder="Enter your username"
-            class="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-gray-500 transition-all duration-300"
-          />
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+          <!-- Email -->
+          <label class="label mt-4">Email</label>
           <input
             v-model="email"
             type="email"
-            placeholder="Enter your email"
-            class="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-gray-500 transition-all duration-300"
+            placeholder="votre@email.com"
+            class="input"
+            @blur="validateEmail"
           />
-          <p v-if="emailError" class="text-red-400 text-xs mt-2">{{ emailError }}</p>
+          <p v-if="errors.email" class="error-text">{{ errors.email }}</p>
+
+          <!-- Password -->
+          <label class="label mt-4">Mot de passe</label>
+          <div class="password-input-wrapper">
+            <input
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="••••••••"
+              class="input"
+              @blur="validatePassword"
+            />
+            <button
+              type="button"
+              @click="showPassword = !showPassword"
+              class="eye-toggle"
+            >
+              {{ showPassword ? "👁️" : "👁️‍🗨️" }}
+            </button>
+          </div>
+          <p v-if="errors.password" class="error-text">{{ errors.password }}</p>
+
+          <!-- Confirm Password (Sign Up Only) -->
+          <div v-if="tab === 'signup'">
+            <label class="label mt-4">Confirmer le mot de passe</label>
+            <input
+              v-model="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              class="input"
+              @blur="validateConfirmPassword"
+            />
+            <p v-if="errors.confirmPassword" class="error-text">{{ errors.confirmPassword }}</p>
+          </div>
+
+          <!-- Terms & Options -->
+          <div v-if="tab === 'signup'" class="mt-4">
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="acceptTerms" class="checkbox" />
+              <span>J'accepte les <a href="#" class="link">conditions d'utilisation</a></span>
+            </label>
+          </div>
+
+          <a v-if="tab === 'signin'" href="#" class="link forgot-password mt-4">
+            Mot de passe oublié?
+          </a>
+
+          <!-- Submit Button -->
+          <button
+            @click="handleSubmit"
+            :disabled="isLoading"
+            class="btn-send"
+          >
+            <span v-if="!isLoading">
+              {{ tab === "signin" ? "Se connecter" : "S'inscrire" }}
+            </span>
+            <span v-else>⏳ Chargement...</span>
+          </button>
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">Password</label>
-          <input
-            v-model="password"
-            type="password"
-            placeholder="Enter your password"
-            class="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-gray-500 transition-all duration-300"
-          />
-          <p v-if="passwordError" class="text-red-400 text-xs mt-2">{{ passwordError }}</p>
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Right Side - Info / Toggle -->
+        <div class="right-side">
+          <h2 class="section-title">
+            {{ tab === "signin" ? "Pas de compte?" : "Vous avez un compte?" }}
+          </h2>
+
+          <p class="info-text">
+            {{ tab === "signin" 
+              ? "Créez un compte pour accéder à tous nos services et profiter de l'expérience RedVerse complète." 
+              : "Connectez-vous pour retrouver vos playlists, vos favoris et continuer votre aventure musicale." }}
+          </p>
+
+          <button
+            @click="toggleTab"
+            class="btn-send mt-6"
+          >
+            {{ tab === "signin" ? "Créer un compte" : "Se connecter" }}
+          </button>
+
+          <!-- Features -->
+          <div class="features-list mt-8">
+            <div class="feature">
+              <span class="icon">🎵</span>
+              <span>Découvrez la musique</span>
+            </div>
+            <div class="feature">
+              <span class="icon">🎧</span>
+              <span>Playlists personnalisées</span>
+            </div>
+            <div class="feature">
+              <span class="icon">❤️</span>
+              <span>Vos favoris en un clic</span>
+            </div>
+          </div>
         </div>
-
-        <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center gap-2 cursor-pointer text-gray-400 hover:text-gray-300">
-            <input type="checkbox" v-model="staySignedIn" class="accent-red-500 rounded" />
-            Stay signed in
-          </label>
-          <a href="#" class="text-red-500 hover:text-red-400 font-medium transition">Forgot Password?</a>
-        </div>
-
-        <button
-          type="submit"
-          class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 rounded-lg shadow-lg shadow-red-600/40 transition-all duration-300 transform hover:scale-105 active:scale-95"
-        >
-          {{ tab === "signin" ? "SIGN IN" : "SIGN UP" }}
-        </button>
-      </form>
-
-      <!-- Texte en bas -->
-      <div class="text-center mt-8 text-gray-500 text-sm border-t border-gray-700/50 pt-6">
-        {{ tab === "signin" ? "Don't have an account?" : "Already have an account?" }}
-        <button
-          class="text-red-500 hover:text-red-400 font-bold ml-2 transition"
-          @click="tab = tab === 'signin' ? 'signup' : 'signin'"
-        >
-          {{ tab === "signin" ? "Create one" : "Sign in" }}
-        </button>
       </div>
     </div>
   </div>
@@ -119,76 +140,256 @@
 
 <script setup>
 import { ref } from "vue";
+import bg from "../assets/contact-bg.png";
 import { isValidEmail, isValidPassword } from "../services/Valide.js";
+import { Toast } from "../ui/Toast.js";
 
+// State
 const tab = ref("signin");
 const username = ref("");
 const email = ref("");
 const password = ref("");
-const staySignedIn = ref(false);
+const confirmPassword = ref("");
+const acceptTerms = ref(false);
+const showPassword = ref(false);
+const isLoading = ref(false);
 
-const emailError = ref("");
-const passwordError = ref("");
+const errors = ref({
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: ""
+});
 
-//  Fonction de validation + envoi au serveur JSON
-const handleSubmit = async () => {
-  emailError.value = "";
-  passwordError.value = "";
+// Validation functions
+const validateUsername = () => {
+  errors.value.username = "";
+  if (tab.value === "signup" && username.value.length < 3) {
+    errors.value.username = "Min 3 caractères";
+  }
+};
 
+const validateEmail = () => {
+  errors.value.email = "";
   if (!isValidEmail(email.value)) {
-    emailError.value = "Email invalide (ex: user@example.com)";
+    errors.value.email = "Email invalide";
   }
+};
 
+const validatePassword = () => {
+  errors.value.password = "";
   if (!isValidPassword(password.value)) {
-    passwordError.value =
-      "Mot de passe ≥ 8 caractères, avec 1 majuscule et 1 chiffre.";
+    errors.value.password = "Min 8 caractères (1 majuscule, 1 chiffre)";
+  }
+};
+
+const validateConfirmPassword = () => {
+  errors.value.confirmPassword = "";
+  if (tab.value === "signup" && password.value !== confirmPassword.value) {
+    errors.value.confirmPassword = "Les mots de passe ne correspondent pas";
+  }
+};
+
+// Toggle tab
+const toggleTab = () => {
+  tab.value = tab.value === "signin" ? "signup" : "signin";
+  clearForm();
+};
+
+// Clear form
+const clearForm = () => {
+  username.value = "";
+  email.value = "";
+  password.value = "";
+  confirmPassword.value = "";
+  acceptTerms.value = false;
+  showPassword.value = false;
+  errors.value = { username: "", email: "", password: "", confirmPassword: "" };
+};
+
+// Submit handler
+const handleSubmit = async () => {
+  // Validate all fields
+  validateUsername();
+  validateEmail();
+  validatePassword();
+  if (tab.value === "signup") {
+    validateConfirmPassword();
+    if (!acceptTerms.value) {
+      Toast.error("Acceptez les conditions d'utilisation");
+      return;
+    }
   }
 
-  if (emailError.value || passwordError.value) return;
-
-  //  Mode connexion
-  if (tab.value === "signin") {
-    alert(`Bienvenue, ${username.value}!`);
+  // Check for errors
+  if (Object.values(errors.value).some(e => e)) {
+    Toast.error("Veuillez corriger les erreurs");
     return;
   }
 
-  //Mode création de compte → envoi vers server.js
-  const newUser = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  };
+  isLoading.value = true;
 
   try {
-    const response = await fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser),
-    });
+    if (tab.value === "signin") {
+      // Sign In logic
+      const response = await fetch("http://localhost:3000/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.value, password: password.value })
+      });
 
-    const result = await response.json();
-    alert("Compte créé avec succès !");
+      if (!response.ok) {
+        throw new Error("Connexion échouée");
+      }
 
-    username.value = "";
-    email.value = "";
-    password.value = "";
+      Toast.success("Connexion réussie!");
+      clearForm();
+    } else {
+      // Sign Up logic
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: username.value,
+          email: email.value,
+          password: password.value
+        })
+      });
 
+      if (!response.ok) {
+        throw new Error("Inscription échouée");
+      }
+
+      Toast.success("Inscription réussie! Bienvenue!");
+      clearForm();
+      tab.value = "signin";
+    }
   } catch (error) {
-    alert("Erreur serveur !");
+    Toast.error(error.message || "Une erreur est survenue");
     console.error(error);
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap");
+@import url("../css/contact.css");
 
-* {
-  font-family: "Orbitron", sans-serif;
+/* Additional Inscription styles */
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-body {
-  margin: 0;
-  background-color: #000;
+.eye-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+
+.eye-toggle:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.error-text {
+  font-size: 0.85rem;
+  color: #ff4444;
+  margin-top: 4px;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.2s ease;
+}
+
+.checkbox-label:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.checkbox {
+  cursor: pointer;
+  accent-color: #ff0000;
+  width: 16px;
+  height: 16px;
+}
+
+.link {
+  color: #ff0000;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: #ff4444;
+  text-decoration: underline;
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  color: #ff0000;
+  transform: translateX(5px);
+}
+
+.icon {
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-modal {
+    flex-direction: column;
+    width: 90%;
+    padding: 25px;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .left-side,
+  .right-side {
+    width: 100%;
+  }
 }
 </style>
