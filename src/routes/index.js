@@ -13,27 +13,41 @@ const router = createRouter({
                         path: '', 
                         name: 'Accueil', 
                         component:()=> import('../view/Accueil.vue'),
+                        meta: { showSideBar: false }
                     },
                     {
                         path: 'signup',
                         name: 'Signup',
                         component:()=> import('../view/Inscription.vue'),
-                        meta: { showNav: false }
+                        meta: { showNav: false, showSideBar: false }
                     },
                     {
                         path: 'aPropos',
                         name: 'aPropos',
                         component:()=> import('../view/APropos.vue'),
+                        meta: { showSideBar: false }
                     },
                     {
                         path: 'contact',
                         name: 'Contact',
                         component:()=> import('../view/Contact.vue'),
+                        meta: { showSideBar: false }
                     },
                     {
                         path: 'dashboard',
                         name: 'Dashboard',
                         component:()=> import('../view/Dashboard.vue'),
+                    },
+                    {
+                        path: '/playlist',
+                        name: 'Playlist',
+                        component: () => import('../view/Playlist.vue'),
+                        
+                    },
+                    {
+                        path: '/playlist/create',
+                        name: 'CreatePlaylist',
+                        component: () => import('../view/CreatePlaylist.vue'),
                     }
                 ]
         },

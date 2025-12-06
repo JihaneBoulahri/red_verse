@@ -1,16 +1,6 @@
 <template>
   <div class="min-h-screen bg-black text-white flex">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-900 border-r border-red-600/30 p-6 hidden md:block">
-      <h2 class="text-2xl font-bold mb-8 text-red-500">RedVerse</h2>
-      <nav class="flex flex-col gap-4 text-lg">
-        <router-link to="/" class="text-gray-300 hover:text-red-500 transition">📊 Accueil</router-link>
-        <a href="#" class="text-gray-300 hover:text-red-500 transition">📈 Statistiques</a>
-        <a href="#" class="text-gray-300 hover:text-red-500 transition">🎵 Musique</a>
-        <a href="#" class="text-gray-300 hover:text-red-500 transition">⚙️ Paramètres</a>
-      </nav>
-    </aside>
 
     <!-- Main Content -->
     <main class="flex-1 p-8">
@@ -28,12 +18,38 @@
       </header>
 
       <!-- Cards -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div
           class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-6 rounded-xl hover:border-red-600/50 transition shadow-xl shadow-red-600/10">
           <h3 class="text-xl font-semibold mb-4 text-gray-300">Total Users</h3>
           <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">1,204</p>
           <p class="text-xs text-gray-500 mt-2">↑ 12% depuis hier</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-6 rounded-xl hover:border-red-600/50 transition shadow-xl shadow-red-600/10">
+          <h3 class="text-xl font-semibold mb-4 text-gray-300">Total Users</h3>
+          <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">1,204</p>
+          <p class="text-xs text-gray-500 mt-2">↑ 12% depuis hier</p>
+        </div>
+
+        <div
+          class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-6 rounded-xl hover:border-red-600/50 transition shadow-xl shadow-red-600/10">
+          <h3 class="text-xl font-semibold mb-4 text-gray-300">Total Users</h3>
+          <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">1,204</p>
+          <p class="text-xs text-gray-500 mt-2">↑ 12% depuis hier</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-6 rounded-xl hover:border-red-600/50 transition shadow-xl shadow-red-600/10">
+          <h3 class="text-xl font-semibold mb-4 text-gray-300">Total Users</h3>
+          <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">1,204</p>
+          <p class="text-xs text-gray-500 mt-2">↑ 12% depuis hier</p>
+        </div>
+
+        <div
+          class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-6 rounded-xl hover:border-red-600/50 transition shadow-xl shadow-red-600/10">
+          <h3 class="text-xl font-semibold mb-4 text-gray-300">Musics Played</h3>
+          <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">8,920</p>
+          <p class="text-xs text-gray-500 mt-2">↑ 23% cette semaine</p>
         </div>
 
         <div

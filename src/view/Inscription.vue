@@ -143,7 +143,7 @@ import { ref } from "vue";
 import bg from "../assets/contact-bg.png";
 import { isValidEmail, isValidPassword } from "../services/Valide.js";
 import { Toast } from "../ui/Toast.js";
-
+import { useRouter } from "vue-router";
 // State
 const tab = ref("signin");
 const username = ref("");
@@ -153,7 +153,7 @@ const confirmPassword = ref("");
 const acceptTerms = ref(false);
 const showPassword = ref(false);
 const isLoading = ref(false);
-
+const router = useRouter()
 const errors = ref({
   username: "",
   email: "",
@@ -243,6 +243,8 @@ const handleSubmit = async () => {
       }
 
       Toast.success("Connexion réussie!");
+      localStorage.setItem("redverse_user", JSON.stringify({ username }))
+      router.push("/dashboard")
       clearForm();
     } else {
       // Sign Up logic
@@ -274,14 +276,22 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-@import url("../css/contact.css");
-
+/* @import url("../css/contact.css");
+ */
 /* Additional Inscription styles */
 
 .password-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.right-side {
+  width: 60%;
+}
+
+.left-side {
+  width: 40%;
 }
 
 .eye-toggle {

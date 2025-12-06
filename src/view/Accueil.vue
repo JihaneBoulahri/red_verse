@@ -21,7 +21,7 @@
         >
           Start Listening
         </button> -->
-        <button @click="$router.push({ name: 'Signup' })"
+        <button @click="startListening"
           class="mt-10 bg-red-600 hover:bg-red-700 px-8 py-3 rounded-full font-semibold transition-all duration-300"
         >
           Start Listening
@@ -58,13 +58,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import NavBar from '../components/NavBar.vue'
+import { useRouter } from 'vue-router';
 
-export default {
-  name: " Accueil",
-  components: {
-    NavBar,
-  }
-};
+const router = useRouter()
+
+function startListening() {
+  const user = localStorage.getItem("redverse_user");
+  if(user)
+    router.push('/dashboard')
+  else 
+    router.push('/Signup')
+}
 </script>

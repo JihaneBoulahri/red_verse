@@ -143,6 +143,22 @@ app.get('/api/users', (req, res) => {
   }
 });
 
+app.get('/api/deezer/playlists', async (req, res) => {
+  try {
+    const url =
+      "https://api.deezer.com/search/playlist?q=top";
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+    res.json(data);
+
+  } catch (error) {
+    console.error("Deezer Playlist Error:", error);
+    res.status(500).json({ error: "Erreur Deezer Playlists" });
+  }
+});
+
 app.get('/api/deezer/tracks', async (req, res) => {
   try {
     const response = await fetch('https://api.deezer.com/chart/0/tracks');
