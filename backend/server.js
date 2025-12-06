@@ -76,7 +76,7 @@ app.post('/signup', (req, res) => {
     users.push({ username, email, password, createdAt: new Date().toISOString() });
     writeUsers(users);
     console.log("✅ Nouvel utilisateur inscrit :", email);
-    res.json({ success: true, message: "Inscription réussie !" });
+    return res.json({ success: true, message: "Inscription réussie !" });
   } catch (err) {
     console.error("❌ Erreur signup :", err);
     res.status(500).json({ success: false, message: "Erreur serveur lors de l'inscription" });
@@ -101,7 +101,7 @@ app.post('/signin', (req, res) => {
     }
 
     console.log("✅ Connexion réussie :", email);
-    res.json({ success: true, message: `Bienvenue ${user.username} !`, user: { username: user.username, email: user.email } });
+    return res.json({ success: true, message: `Bienvenue ${user.username} !`, user: { username: user.username, email: user.email } });
   } catch (err) {
     console.error("❌ Erreur signin :", err);
     res.status(500).json({ success: false, message: "Erreur serveur lors de la connexion" });

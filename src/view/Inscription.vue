@@ -241,7 +241,9 @@ const handleSubmit = async () => {
       if (!response.ok) {
         throw new Error("Connexion échouée");
       }
-
+      
+      const data = await response.json()
+      let username = data?.user?.username
       Toast.success("Connexion réussie!");
       localStorage.setItem("redverse_user", JSON.stringify({ username }))
       router.push("/dashboard")
@@ -262,7 +264,10 @@ const handleSubmit = async () => {
         throw new Error("Inscription échouée");
       }
 
+      const data = response.json()
+      localStorage.setItem("redverse_user", JSON.stringify({ username }))
       Toast.success("Inscription réussie! Bienvenue!");
+      router.push("/dashboard")
       clearForm();
       tab.value = "signin";
     }

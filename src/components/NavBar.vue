@@ -88,7 +88,7 @@ onMounted(() => {
     try {
       const userData = JSON.parse(user);
       isLoggedIn.value = true;
-      userEmail.value = userData.email || 'User';
+      userEmail.value = userData.username || 'User';
     } catch (e) {
       isLoggedIn.value = false;
     }
@@ -102,7 +102,6 @@ const handleLogout = () => {
   userEmail.value = '';
   searchQuery.value = '';
   router.push('/');
-  alert('✅ You have been logged out!');
 };
 
 // Fonction recherche de musique
