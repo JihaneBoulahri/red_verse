@@ -48,7 +48,13 @@
           <span class="col-duration">{{ formatDuration(track.duration) }}</span>
           <span class="col-action">
             <button class="track-play-btn">▶</button>
-            <button class="track-like-btn">❤️</button>
+            <AddPlaylistButton 
+              :music="track.title"
+              :album="track.album?.title || 'Unknown'"
+              @added="onMusicAddedToPlaylist"
+              @playlist-created="onPlaylistCreated"
+            />
+            <AddFavoriteBtn :music="track.title" :album="track.album?.title || 'Unknown'" />
           </span>
         </div>
       </div>
@@ -60,6 +66,8 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { Toast } from '../ui/Toast.js';
+import AddFavoriteBtn from '../components/AddFavoriteButton.vue';
+import AddPlaylistButton from '../components/AddPlaylistButton.vue'
 
 const router = useRouter();
 const route = useRoute();
@@ -69,6 +77,14 @@ const tracks = ref([]);
 const loading = ref(true);
 const playlistId = ref(null);
 
+// Méthodes pour gérer les événements
+const onMusicAddedToPlaylist = (event) => {
+  console.log(`🎵 ${event.music} ajouté à la playlist: ${event.playlist}`);
+};
+
+const onPlaylistCreated = (playlist) => {
+  console.log(`✅ Nouvelle playlist créée: ${playlist.name}`);
+};
 // Format duration (seconds to MM:SS)
 const formatDuration = (seconds) => {
   if (!seconds) return '0:00';

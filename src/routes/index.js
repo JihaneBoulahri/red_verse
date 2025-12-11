@@ -50,9 +50,14 @@ const router = createRouter({
                         component: () => import('../view/PlaylistDetails.vue'),
                     },
                     {
-                        path: '/playlist/create',
-                        name: 'CreatePlaylist',
-                        component: () => import('../view/CreatePlaylist.vue'),
+                        path: "/favorites",
+                        name: "Favorites",
+                        component: () => import("../view/Favorites.vue")
+                    },
+                    {
+                        path: "/create/:id",
+                        name: "SavePlaylist",
+                        component: () => import("../view/SavePlaylistPage.vue")
                     }
                 ]
         },

@@ -72,6 +72,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { Toast } from "../ui/Toast.js";
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -104,39 +105,139 @@ const handleLogout = () => {
   router.push('/');
 };
 
-// Fonction recherche de musique
-const handleSearch = async () => {
-  if (!searchQuery.value.trim()) {
-    alert('⚠️ Please enter a search term');
+const handleSearch = async (searchType = 'tracks') => {
+  const query = searchQuery.value.trim();
+  
+  // Validation de la recherche
+  if (!query) {
+    Toast.error('⚠️ Veuillez entrer un terme de recherche');
+    return;
+  }
+
+  // Vérification de la longueur de la recherche
+  if (query.length < 2) {
+    Toast.error('⚠️ La recherche doit contenir au moins 2 caractères');
     return;
   }
 
   try {
-    // Appel à l'API Jamendo pour chercher de la musique
-    const response = await fetch(
-      `https://api.jamendo.com/v3.0/tracks/?client_id=YOUR_CLIENT_ID&search=${encodeURIComponent(searchQuery.value)}&limit=10`
-    );
+    // Afficher un loader pendant la recherche
+    Toast.loading('🔍 Recherche en cours...', { duration: 5000 });
     
-    if (!response.ok) throw new Error('Search error');
+    // Configuration de l'API en fonction du type de recherche
+    const apiConfig = {
+      tracks: {
+        endpoint: 'tracks',
+        params: 'format=json&limit=15&include=musicinfo&audioformat=mp32',
+        resultKey: 'tracks',
+        successMessage: (count) => `🎵 ${count} morceau(x) trouvé(s) !`,
+        fallbackMessage: 'Aucune musique trouvée'
+      },
+      albums: {
+        endpoint: 'albums',
+        params: 'format=json&limit=10&include=artistdetails',
+        resultKey: 'albums',
+        successMessage: (count) => `💿 ${count} album(s) trouvé(s) !`,
+        fallbackMessage: 'Aucun album trouvé'
+      },
+      artists: {
+        endpoint: 'artists',
+        params: 'format=json&limit=10&include=stats',
+        resultKey: 'artists',
+        successMessage: (count) => `🎤 ${count} artiste(s) trouvé(s) !`,
+        fallbackMessage: 'Aucun artiste trouvé'
+      }
+    };
+
+    const config = apiConfig[searchType] || apiConfig.tracks;
+    
+    // Construction de l'URL API
+    const apiUrl = `https://api.jamendo.com/v3.0/${config.endpoint}/?` +
+                   `client_id=${import.meta.env.VITE_JAMENDO_CLIENT_ID || 'YOUR_CLIENT_ID'}&` +
+                   `search=${encodeURIComponent(query)}&` +
+                   config.params;
+
+    // Appel à l'API
+    const response = await fetch(apiUrl);
+    
+    if (!response.ok) {
+      throw new Error(`Erreur API: ${response.status}`);
+    }
     
     const data = await response.json();
+    const results = data.results || [];
     
-    if (data.results && data.results.length > 0) {
-      // Stocker les résultats dans localStorage
-      localStorage.setItem('search_results', JSON.stringify(data.results));
-      alert(`✅ ${data.results.length} tracks found! Redirecting...`);
-      router.push('/playlist');
+    if (results.length > 0) {
+      // Sauvegarder les résultats avec métadonnées
+      const searchData = {
+        query,
+        type: searchType,
+        results,
+        timestamp: new Date().toISOString(),
+        totalResults: data.headers?.results_total || results.length
+      };
+      
+      localStorage.setItem('search_results', JSON.stringify(searchData));
+      
+      // Historique des recherches
+      const searchHistory = JSON.parse(localStorage.getItem('search_history') || '[]');
+      const historyItem = {
+        query,
+        type: searchType,
+        date: new Date().toISOString(),
+        resultCount: results.length
+      };
+      
+      // Limiter l'historique à 10 éléments
+      const updatedHistory = [historyItem, ...searchHistory.slice(0, 9)];
+      localStorage.setItem('search_history', JSON.stringify(updatedHistory));
+      
+      // Message de succès avec plus d'informations
+      Toast.success(
+        `✅ ${config.successMessage(results.length)}\n` +
+        `📍 Redirection vers ${searchType === 'tracks' ? 'playlist' : searchType}...`
+      );
+      
+      // Redirection selon le type de recherche
+      setTimeout(() => {
+        const redirectPath = searchType === 'tracks' ? '/playlist' : 
+                            searchType === 'albums' ? '/albums' : '/artists';
+        router.push({
+          path: redirectPath,
+          query: { 
+            search: query,
+            type: searchType,
+            resultsCount: results.length 
+          }
+        });
+      }, 1500);
+      
     } else {
-      alert('❌ No music found');
+      // Aucun résultat trouvé
+      Toast.error(`😕 ${config.fallbackMessage}\nEssayez avec d\'autres termes`);
+      
+      // Recherche de suggestions alternatives
+      await getSearchSuggestions(query);
     }
+    
   } catch (error) {
-    console.error('Erreur:', error);
-    // Fallback: recherche locale dans la playlist
-    alert('🔍 Local search activated');
-    router.push('/playlist');
+    console.error('Erreur de recherche:', error);
+    
+    // Gestion des erreurs spécifiques
+    if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+      Toast.error('🌐 Problème de connexion internet');
+    } else if (error.message.includes('429')) {
+      Toast.error('⚡ Trop de requêtes, veuillez patienter');
+    } else {
+      Toast.error('❌ Erreur lors de la recherche');
+    }
+    
+    // Fallback: recherche locale
+    await fallbackLocalSearch(query);
+  } finally {
+    // Réinitialiser le champ de recherche
+    searchQuery.value = '';
   }
-  
-  searchQuery.value = '';
 };
 
 // Toggle compte menu

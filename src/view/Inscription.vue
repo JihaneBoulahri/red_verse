@@ -243,7 +243,7 @@ const handleSubmit = async () => {
   try {
     /* -------------------- SIGN IN -------------------- */
     if (tab.value === "signin") {
-      const response = await fetch("http://localhost:3000/signin", {
+      const response = await fetch("http://localhost:3000/api/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -269,7 +269,7 @@ const handleSubmit = async () => {
 
     /* -------------------- SIGN UP -------------------- */
     else {
-      const response = await fetch("http://localhost:3000/signup", {
+      const response = await fetch("http://localhost:3000/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

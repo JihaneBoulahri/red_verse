@@ -60,52 +60,6 @@
           <span class="label">Liked Songs</span>
         </button>
       </div>
-
-      <!-- Genres -->
-      <div class="nav-section">
-        <button 
-          @click="toggleSection('genres')" 
-          class="nav-item collapsible"
-          :class="{ expanded: expandedSections.genres }"
-        >
-          <span class="icon">🎸</span>
-          <span class="label">Browse Genres</span>
-          <span class="toggle">{{ expandedSections.genres ? '▼' : '▶' }}</span>
-        </button>
-        <div v-if="expandedSections.genres" class="sub-items">
-          <button 
-            v-for="genre in genres" 
-            :key="genre" 
-            @click="filterByGenre(genre)"
-            class="sub-item"
-          >
-            {{ genre }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Recent Albums -->
-      <div class="nav-section">
-        <button 
-          @click="toggleSection('albums')" 
-          class="nav-item collapsible"
-          :class="{ expanded: expandedSections.albums }"
-        >
-          <span class="icon">💿</span>
-          <span class="label">Recent Albums</span>
-          <span class="toggle">{{ expandedSections.albums ? '▼' : '▶' }}</span>
-        </button>
-        <div v-if="expandedSections.albums" class="sub-items">
-          <button 
-            v-for="album in recentAlbums" 
-            :key="album.id" 
-            @click="goToAlbum(album.id)"
-            class="sub-item"
-          >
-            {{ album.name }}
-          </button>
-        </div>
-      </div>
     </nav>
   </aside>
 </template>
@@ -126,18 +80,6 @@ const expandedSections = ref({
 
 const userPlaylists = ref([]);
 
-const genres = ref([
-  'Pop', 'Rock', 'Hip-Hop', 'Raï', 'Gaming-Music', 'Classical', 'House', 'Country'
-]);
-
-const recentAlbums = ref([
-  { id: 1, name: 'Album 1' },
-  { id: 2, name: 'Album 2' },
-  { id: 3, name: 'Album 3' },
-  { id: 4, name: 'Album 4' },
-  { id: 5, name: 'Album 5' }
-]);
-
 // Toggle section
 const toggleSection = (section) => {
   expandedSections.value[section] = !expandedSections.value[section];
@@ -157,7 +99,7 @@ const goToPlaylist = (action) => {
   if (action === 'all') {
     router.push('/playlist');
   } else if (action === 'create') {
-    router.push('/playlist/create');
+    router.push('/create/${action}');
   }
 };
 
