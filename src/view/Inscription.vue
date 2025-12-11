@@ -137,14 +137,16 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref } from "vue";
 import bg from "../assets/contact-bg.png";
 import { isValidEmail, isValidPassword } from "../services/Valide.js";
 import { Toast } from "../ui/Toast.js";
 import { useRouter } from "vue-router";
-// State
+
+const router = useRouter();
+
+
 const tab = ref("signin");
 const username = ref("");
 const email = ref("");
@@ -153,15 +155,15 @@ const confirmPassword = ref("");
 const acceptTerms = ref(false);
 const showPassword = ref(false);
 const isLoading = ref(false);
-const router = useRouter()
+
 const errors = ref({
   username: "",
   email: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
 });
 
-// Validation functions
+//VALIDATION FUNCTIONS
 const validateUsername = () => {
   errors.value.username = "";
   if (tab.value === "signup" && username.value.length < 3) {
@@ -190,13 +192,14 @@ const validateConfirmPassword = () => {
   }
 };
 
-// Toggle tab
+//TOGGLE TAB
 const toggleTab = () => {
   tab.value = tab.value === "signin" ? "signup" : "signin";
   clearForm();
 };
 
-// Clear form
+
+// CLEAR FORM
 const clearForm = () => {
   username.value = "";
   email.value = "";
@@ -204,25 +207,33 @@ const clearForm = () => {
   confirmPassword.value = "";
   acceptTerms.value = false;
   showPassword.value = false;
-  errors.value = { username: "", email: "", password: "", confirmPassword: "" };
+
+  errors.value = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
 };
 
-// Submit handler
+
+//SUBMIT HANDLER:
+
 const handleSubmit = async () => {
-  // Validate all fields
   validateUsername();
   validateEmail();
   validatePassword();
+
   if (tab.value === "signup") {
     validateConfirmPassword();
+
     if (!acceptTerms.value) {
       Toast.error("Acceptez les conditions d'utilisation");
       return;
     }
   }
 
-  // Check for errors
-  if (Object.values(errors.value).some(e => e)) {
+  if (Object.values(errors.value).some((e) => e)) {
     Toast.error("Veuillez corriger les erreurs");
     return;
   }
@@ -230,44 +241,55 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
+    /* -------------------- SIGN IN -------------------- */
     if (tab.value === "signin") {
-      // Sign In logic
       const response = await fetch("http://localhost:3000/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.value, password: password.value })
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Connexion échouée");
-      }
-      
-      const data = await response.json()
-      let username = data?.user?.username
-      Toast.success("Connexion réussie!");
-      localStorage.setItem("redverse_user", JSON.stringify({ username }))
-      router.push("/dashboard")
+      if (!response.ok) throw new Error("Connexion échouée");
+
+      const data = await response.json();
+      const userNameFromDb = data?.user?.username;
+
+      localStorage.setItem(
+        "redverse_user",
+        JSON.stringify({ username: userNameFromDb })
+      );
+
+      Toast.success("Connexion réussie !");
+      router.push("/dashboard");
       clearForm();
-    } else {
-      // Sign Up logic
+    }
+
+    /* -------------------- SIGN UP -------------------- */
+    else {
       const response = await fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: username.value,
           email: email.value,
-          password: password.value
-        })
+          password: password.value,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Inscription échouée");
-      }
+      if (!response.ok) throw new Error("Inscription échouée");
 
-      const data = response.json()
-      localStorage.setItem("redverse_user", JSON.stringify({ username }))
-      Toast.success("Inscription réussie! Bienvenue!");
-      router.push("/dashboard")
+      const data = await response.json();
+
+      localStorage.setItem(
+        "redverse_user",
+        JSON.stringify({ username: username.value })
+      );
+
+      Toast.success("Inscription réussie ! Bienvenue !");
+      router.push("/dashboard");
       clearForm();
       tab.value = "signin";
     }
@@ -281,9 +303,6 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-/* @import url("../css/contact.css");
- */
-/* Additional Inscription styles */
 
 .password-input-wrapper {
   position: relative;

@@ -22,5 +22,35 @@
     "email": "wail@gmail.com",
     "password": "Wail2008",
     "createdAt": "2025-11-29T12:31:45.936Z"
+  },
+  {
+    "username": "bakali",
+    "email": "bakali@gmail.com",
+    "password": "Cvxbwncvcv83",
+    "createdAt": "2025-12-08T14:59:59.319Z"
+  },
+  {
+    "username": "kawtar",
+    "email": "kawtar@gmail.com",
+    "password": "Kawtar2006",
+    "createdAt": "2025-12-08T15:02:03.667Z"
+  },
+  {
+    "username": "ayyoub",
+    "email": "ayyoub@gmail.com",
+    "password": "Ayyoub123",
+    "createdAt": "2025-12-08T21:32:02.734Z"
+  },
+  {
+    "username": "fouzia",
+    "email": "fouzia@gmail.com",
+    "password": "Fouzia123",
+    "createdAt": "2025-12-08T21:50:05.297Z"
+  },
+  {
+    "username": "fouzia",
+    "email": "foufou@gmail.com",
+    "password": "Fou12345",
+    "createdAt": "2025-12-08T21:51:20.868Z"
   }
 ]

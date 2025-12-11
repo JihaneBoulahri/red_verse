@@ -9,6 +9,7 @@
         class="playlist-card"
         v-for="p in playlists"
         :key="p.id"
+        @click="goToPlaylist(p.id)"
       >
         <div class="cover-wrapper">
           <img :src="p.picture_medium" alt="cover" class="playlist-cover" />
@@ -25,10 +26,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { getPlaylists } from '../services/deezer';
 
+const router = useRouter();
 const playlists = ref([]);
 const loading = ref(true);
+
+const goToPlaylist = (playlistId) => {
+  router.push({ name: 'PlaylistDetails', params: { id: playlistId } });
+};
 
 onMounted(async () => {
   try {
@@ -83,11 +90,12 @@ onMounted(async () => {
   cursor: pointer;
   box-shadow: 2px 7px 23px -4px rgba(59,59,59,0.75);
   transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  user-select: none;
 }
 
 .playlist-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 30px rgba(255, 0, 0, 0.3);
   background-color: #27293d;
 }
 

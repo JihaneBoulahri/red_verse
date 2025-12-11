@@ -170,4 +170,40 @@ app.get('/api/deezer/tracks', async (req, res) => {
   }
 });
 
+// Get playlist details
+app.get('/api/deezer/playlist/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await fetch(`https://api.deezer.com/playlist/${id}`);
+    
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Playlist not found' });
+    }
+    
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('❌ Erreur Deezer playlist:', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération de la playlist' });
+  }
+});
+
+// Get playlist tracks
+app.get('/api/deezer/playlist/:id/tracks', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await fetch(`https://api.deezer.com/playlist/${id}/tracks`);
+    
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Tracks not found' });
+    }
+    
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('❌ Erreur Deezer tracks:', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération des tracks' });
+  }
+});
+
 app.listen(PORT, () => console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`));
