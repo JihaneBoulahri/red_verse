@@ -15,7 +15,7 @@
 
           <!-- Username (Sign Up Only) -->
           <div v-if="tab === 'signup'">
-            <label class="label">Nom d'utilisateur</label>
+            <label class="label">Username</label>
             <input
               v-model="username"
               type="text"
@@ -38,7 +38,7 @@
           <p v-if="errors.email" class="error-text">{{ errors.email }}</p>
 
           <!-- Password -->
-          <label class="label mt-4">Mot de passe</label>
+          <label class="label mt-4">Password</label>
           <div class="password-input-wrapper">
             <input
               v-model="password"
@@ -59,7 +59,7 @@
 
           <!-- Confirm Password (Sign Up Only) -->
           <div v-if="tab === 'signup'">
-            <label class="label mt-4">Confirmer le mot de passe</label>
+            <label class="label mt-4">Confirm Password</label>
             <input
               v-model="confirmPassword"
               type="password"
@@ -74,12 +74,12 @@
           <div v-if="tab === 'signup'" class="mt-4">
             <label class="checkbox-label">
               <input type="checkbox" v-model="acceptTerms" class="checkbox" />
-              <span>J'accepte les <a href="#" class="link">conditions d'utilisation</a></span>
+              <span>I accept the<a href="#" class="link">terms of use</a></span>
             </label>
           </div>
 
           <a v-if="tab === 'signin'" href="#" class="link forgot-password mt-4">
-            Mot de passe oublié?
+            forgot password?
           </a>
 
           <!-- Submit Button -->
@@ -91,7 +91,7 @@
             <span v-if="!isLoading">
               {{ tab === "signin" ? "Se connecter" : "S'inscrire" }}
             </span>
-            <span v-else>⏳ Chargement...</span>
+            <span v-else>⏳Loading...</span>
           </button>
         </div>
 

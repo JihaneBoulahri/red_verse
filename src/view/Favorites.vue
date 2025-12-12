@@ -2,19 +2,19 @@
   <div class="favorites">
     <h1>❤️ Favorites</h1>
 
-    <button @click="load" class="refresh-btn">🔄 Rafraîchir</button>
+    <button @click="load" class="refresh-btn">🔄 Refresh</button>
 
-    <div v-if="loading" class="loading">Chargement...</div>
+    <div v-if="loading" class="loading">Loading...</div>
 
     <div v-else-if="favorites.length === 0" class="empty">
-      Aucun favori pour le moment
+      No favorites for now
     </div>
 
     <div v-else class="favorites-list">
       <div class="stats">
-        <span class="stat">🎵 {{ favorites.length }} titres</span>
-        <span class="stat">🎤 {{ uniqueArtists }} artistes</span>
-        <span class="stat">💿 {{ uniqueAlbums }} albums</span>
+        <span class="stat">🎵 {{ favorites.length }} titles</span>
+       
+        <span class="stat">💿 {{ uniqueAlbums }}playlists</span>
       </div>
 
       <div v-for="(f, i) in favorites" :key="f.id || i" class="item">
@@ -33,7 +33,7 @@
             <div class="extra" v-if="f.deezerId || f.preview">
               <span v-if="f.deezerId" class="deezer-id">🎵 Deezer ID: {{ f.deezerId }}</span>
               <button v-if="f.preview" @click.stop="playPreview(f)" class="preview-btn">
-                ▶ Écouter
+                ▶ to listen
               </button>
             </div>
           </div>
@@ -87,11 +87,11 @@ export default {
         const res = await fetch("http://localhost:3000/api/favorites");
         
         if (!res.ok) {
-          throw new Error(`Erreur ${res.status}: ${res.statusText}`);
+          throw new Error(`Error ${res.status}: ${res.statusText}`);
         }
         
         const data = await res.json();
-        console.log("Données reçues:", data);
+        Toast.success("Data received", data);
         
         // Selon ton format JSON, c'est un tableau d'objets avec id
         if (Array.isArray(data)) {
@@ -105,13 +105,13 @@ export default {
         }
         
         if (this.favorites.length > 0) {
-          Toast.success(`${this.favorites.length} favoris chargés`);
+          Toast.success(`${this.favorites.length} Favorites loaded`);
         } else {
-          Toast.info("Aucun favori trouvé");
+          Toast.info("No favorites found");
         }
         
       } catch (err) {
-        Toast.error("Impossible de charger les favoris");
+        Toast.error("Unable to load favorites");
         console.error("Erreur détaillée:", err);
       } finally {
         this.loading = false;
@@ -122,16 +122,16 @@ export default {
       try {
         // Créer une modal de confirmation custom
         const confirmed = await this.showConfirmDialog(
-          "Supprimer des favoris",
-          `Êtes-vous sûr de vouloir supprimer "${favorite.music}" des favoris ?`
+          "Remove favorites",
+          `Are you sure you want to delete "${favorite.music}"favorites?`
         );
         
         if (!confirmed) {
-          Toast.info("Suppression annulée");
+          Toast.info("Deletion canceled");
           return;
         }
         
-        Toast.info("Suppression en cours...");
+        Toast.info("Removal in progress...");
         
         // IMPORTANT: Utiliser l'ID pour supprimer, pas le nom de la musique
         // Si ton backend attend l'ID
@@ -148,7 +148,7 @@ export default {
           }
         });
         
-        console.log("Réponse status:", response.status);
+        Toast.success("Response status", response.status);
         
         if (response.ok) {
           // Supprimer localement immédiatement
@@ -156,19 +156,19 @@ export default {
             favorite.id ? f.id !== favorite.id : f.music !== favorite.music
           );
           
-          Toast.success(`"${favorite.music}" supprimé avec succès !`);
+          Toast.success(`"${favorite.music}" Removed successfully !`);
           
           // Recharger après un court délai
           setTimeout(() => this.load(), 500);
           
         } else {
           const errorData = await response.json().catch(() => ({}));
-          console.error("Erreur détaillée:", errorData);
-          Toast.error(errorData.error || errorData.message || "Échec de la suppression");
+          console.error("Detailed error:", errorData);
+          Toast.error(errorData.error || errorData.message || "Deletion failed");
         }
         
       } catch (err) {
-        Toast.error(`Erreur: ${err.message || "Problème de connexion"}`);
+        Toast.error(`Error: ${err.message || "Connection problem"}`);
         console.error("Erreur détaillée:", err);
       }
     },
@@ -190,11 +190,11 @@ export default {
         const audio = new Audio(favorite.preview);
         audio.play().catch(err => {
           console.error("Erreur lecture audio:", err);
-          Toast.error("Impossible de lire l'aperçu");
+          Toast.error("Unable to play preview");
         });
-        Toast.info(`Lecture de "${favorite.music}"`);
+        Toast.info(`Playing "${favorite.music}"`);
       } else {
-        Toast.info("Aucun aperçu disponible");
+        Toast.info("No preview available");
       }
     },
 

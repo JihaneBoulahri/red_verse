@@ -178,7 +178,6 @@ app.post('/forgot-password', (req, res) => {
 app.get('/api/users', (req, res) => {
   try {
     const users = readJSONFile(USERS_FILE);
-    // Ne pas renvoyer les mots de passe
     const safeUsers = users.map(user => ({
       id: user.id,
       username: user.username,
@@ -226,7 +225,6 @@ app.get('/api/deezer/tracks', async (req, res) => {
   }
 });
 
-// Get playlist details
 app.get('/api/deezer/playlist/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -244,7 +242,6 @@ app.get('/api/deezer/playlist/:id', async (req, res) => {
   }
 });
 
-// Get playlist tracks
 app.get('/api/deezer/playlist/:id/tracks', async (req, res) => {
   try {
     const { id } = req.params;
@@ -262,7 +259,6 @@ app.get('/api/deezer/playlist/:id/tracks', async (req, res) => {
   }
 });
 
-// Search Deezer
 app.get('/api/deezer/search', async (req, res) => {
   try {
     const { q, type = 'track' } = req.query;
@@ -286,7 +282,6 @@ app.get('/api/deezer/search', async (req, res) => {
 });
 
 // ====================== ROUTES FAVORIS ======================
-// Tous les favoris
 app.get("/api/favorites", (req, res) => {
   try {
     const favs = readJSONFile(FAVORITES_FILE);
@@ -297,7 +292,6 @@ app.get("/api/favorites", (req, res) => {
   }
 });
 
-// Ajouter un favori
 app.post("/api/favorites", (req, res) => {
   try {
     const { music, album, artist, deezerId, preview } = req.body;
@@ -308,7 +302,6 @@ app.post("/api/favorites", (req, res) => {
 
     let favs = readJSONFile(FAVORITES_FILE);
 
-    // Vérifier si déjà dans les favoris (par nom ou ID Deezer)
     const existing = favs.find(f => 
       f.music === music || (deezerId && f.deezerId === deezerId)
     );
@@ -342,7 +335,6 @@ app.post("/api/favorites", (req, res) => {
   }
 });
 
-// Supprimer un favori
 app.delete("/api/favorites/:id", (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -385,13 +377,12 @@ app.get('/api/playlists', (req, res) => {
 app.post('/api/playlists', (req, res) => {
   try {
     const db = readJSONFile(DB_FILE, { playlists: [] });
-    const { name, description } = req.body;
+    const { name, description, musics } = req.body;
     
     if (!name || name.trim() === '') {
       return res.status(400).json({ error: 'Le nom de la playlist est requis' });
     }
     
-    // Générer un ID unique
     const newId = db.playlists.length > 0 
       ? Math.max(...db.playlists.map(p => p.id)) + 1 
       : 1;
@@ -400,7 +391,7 @@ app.post('/api/playlists', (req, res) => {
       id: newId,
       name: name.trim(),
       description: description || '',
-      musics: [],
+      musics: musics || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -434,8 +425,8 @@ app.get('/api/playlists/:id', (req, res) => {
   }
 });
 
-// Ajouter une musique à une playlist
-app.post('/api/playlists/:id/musics', (req, res) => {
+// Ajouter une musique à une playlist (NOUVELLE ROUTE CORRIGÉE)
+app.post('/api/playlists/:id/add-music', (req, res) => {
   try {
     const db = readJSONFile(DB_FILE, { playlists: [] });
     const playlistId = parseInt(req.params.id);
@@ -454,20 +445,25 @@ app.post('/api/playlists/:id/musics', (req, res) => {
       playlist.musics = [];
     }
     
-    // Vérifier les doublons
-    const existingMusic = playlist.musics.find(m => 
-      m.music === music.trim() || (deezerId && m.deezerId === deezerId)
+    // Vérifier les doublons (par titre seulement)
+    const isMusicAlreadyInPlaylist = playlist.musics.some(m => 
+      m.music === music.trim()
     );
     
-    if (existingMusic) {
-      return res.status(400).json({ error: 'Cette musique est déjà dans la playlist' });
+    if (isMusicAlreadyInPlaylist) {
+      return res.status(400).json({ 
+        error: 'Cette musique est déjà dans la playlist',
+        music: music,
+        playlist: playlist.name
+      });
     }
     
+    // Créer l'objet musique
     const newMusic = {
-      id: playlist.musics.length > 0 ? Math.max(...playlist.musics.map(m => m.id)) + 1 : 1,
+      id: playlist.musics.length > 0 ? Math.max(...playlist.musics.map(m => m.id || 0)) + 1 : 1,
       music: music.trim(),
-      artist: artist || 'Unknown Artist',
-      album: album || 'Unknown Album',
+      artist: artist || 'Artiste inconnu',
+      album: album || 'Album inconnu',
       deezerId: deezerId || null,
       preview: preview || null,
       addedAt: new Date().toISOString()
@@ -479,10 +475,48 @@ app.post('/api/playlists/:id/musics', (req, res) => {
     writeJSONFile(DB_FILE, db);
     
     console.log(`✅ Musique ajoutée à "${playlist.name}":`, music);
-    res.status(201).json(newMusic);
+    res.status(201).json({
+      success: true,
+      message: `"${music}" ajoutée à "${playlist.name}"`,
+      playlist: playlist,
+      addedMusic: newMusic
+    });
   } catch (err) {
-    console.error('❌ Erreur POST /api/playlists/:id/musics:', err);
-    res.status(500).json({ error: 'Erreur lors de l\'ajout de la musique' });
+    console.error('❌ Erreur POST /api/playlists/:id/add-music:', err);
+    res.status(500).json({ error: 'Erreur lors de l\'ajout de la musique à la playlist' });
+  }
+});
+
+// Mettre à jour une playlist (PATCH)
+app.patch('/api/playlists/:id', (req, res) => {
+  try {
+    const db = readJSONFile(DB_FILE, { playlists: [] });
+    const playlistId = parseInt(req.params.id);
+    const updates = req.body;
+    
+    const playlist = db.playlists.find(p => p.id === playlistId);
+    if (!playlist) {
+      return res.status(404).json({ error: 'Playlist non trouvée' });
+    }
+    
+    // Mettre à jour les propriétés
+    if (updates.name !== undefined) playlist.name = updates.name;
+    if (updates.description !== undefined) playlist.description = updates.description;
+    if (updates.musics !== undefined) playlist.musics = updates.musics;
+    
+    playlist.updatedAt = new Date().toISOString();
+    
+    writeJSONFile(DB_FILE, db);
+    
+    console.log(`✅ Playlist "${playlist.name}" mise à jour`);
+    res.json({
+      success: true,
+      message: 'Playlist mise à jour',
+      playlist: playlist
+    });
+  } catch (err) {
+    console.error('❌ Erreur PATCH /api/playlists/:id:', err);
+    res.status(500).json({ error: 'Erreur lors de la mise à jour de la playlist' });
   }
 });
 
@@ -594,6 +628,83 @@ app.post('/api/albums', (req, res) => {
   }
 });
 
+// ====================== CORRECTION POUR LE COMPOSANT VUE ======================
+// Ces routes sont spécifiques pour votre composant AddPlaylistButton
+
+// GET playlists (sans /api pour compatibilité)
+app.get('/playlists', (req, res) => {
+  try {
+    const db = readJSONFile(DB_FILE, { playlists: [] });
+    res.json(db.playlists || []);
+  } catch (err) {
+    console.error('❌ Erreur GET /playlists:', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération des playlists' });
+  }
+});
+
+// PATCH pour mettre à jour une playlist (sans /api pour compatibilité)
+app.patch('/playlists/:id', (req, res) => {
+  try {
+    const db = readJSONFile(DB_FILE, { playlists: [] });
+    const playlistId = parseInt(req.params.id);
+    const { musics } = req.body;
+    
+    const playlist = db.playlists.find(p => p.id === playlistId);
+    if (!playlist) {
+      return res.status(404).json({ error: 'Playlist non trouvée' });
+    }
+    
+    // Mettre à jour les musiques si fournies
+    if (musics !== undefined) {
+      playlist.musics = musics;
+    }
+    
+    playlist.updatedAt = new Date().toISOString();
+    
+    writeJSONFile(DB_FILE, db);
+    
+    console.log(`✅ Playlist "${playlist.name}" mise à jour via PATCH`);
+    res.json(playlist);
+  } catch (err) {
+    console.error('❌ Erreur PATCH /playlists/:id:', err);
+    res.status(500).json({ error: 'Erreur lors de la mise à jour de la playlist' });
+  }
+});
+
+// POST pour créer une playlist (sans /api pour compatibilité)
+app.post('/playlists', (req, res) => {
+  try {
+    const db = readJSONFile(DB_FILE, { playlists: [] });
+    const { name, musics } = req.body;
+    
+    if (!name || name.trim() === '') {
+      return res.status(400).json({ error: 'Le nom de la playlist est requis' });
+    }
+    
+    const newId = db.playlists.length > 0 
+      ? Math.max(...db.playlists.map(p => p.id)) + 1 
+      : 1;
+    
+    const newPlaylist = {
+      id: newId,
+      name: name.trim(),
+      description: '',
+      musics: musics || [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    
+    db.playlists.push(newPlaylist);
+    writeJSONFile(DB_FILE, db);
+    
+    console.log('✅ Playlist créée via /playlists:', newPlaylist.name);
+    res.status(201).json(newPlaylist);
+  } catch (err) {
+    console.error('❌ Erreur POST /playlists:', err);
+    res.status(500).json({ error: 'Erreur lors de la création de la playlist' });
+  }
+});
+
 // ====================== ROUTE HEALTH CHECK ======================
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -624,4 +735,10 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Serveur backend démarré sur http://localhost:${PORT}`);
   console.log(`📁 Fichiers JSON initialisés dans: ${__dirname}`);
+  console.log(`🎵 Routes playlists disponibles:`);
+  console.log(`   GET  /api/playlists - Toutes les playlists`);
+  console.log(`   GET  /playlists - Compatibilité avec composant Vue`);
+  console.log(`   POST /api/playlists/:id/add-music - Ajouter musique`);
+  console.log(`   POST /api/playlists - Créer playlist`);
+  console.log(`   PATCH /playlists/:id - Mettre à jour playlist`);
 });

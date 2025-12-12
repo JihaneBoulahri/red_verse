@@ -72,6 +72,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { Toast } from '../ui/Toast';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -103,54 +104,72 @@ const handleLogout = () => {
   searchQuery.value = '';
   router.push('/');
 };
-
-// Fonction recherche de musique - CORRIGÉE
+//========================================================================================
+// Remplacer la fonction handleSearch
 const handleSearch = async () => {
   const query = searchQuery.value.trim();
   
   if (!query) {
-    // Créer une simple alerte si Toast n'est pas importé
-    alert('⚠️ Veuillez entrer un terme de recherche');
+    Toast.info('⚠️ Veuillez entrer un terme de recherche');
     return;
   }
 
   try {
-    // Simpler message
-    console.log('🔍 Recherche en cours...');
+    Toast.info('🔍 Searching...');
     
-    const response = await fetch(
+    // Recherche des musiques
+    const tracksResponse = await fetch(
       `http://localhost:3000/api/deezer/search?q=${encodeURIComponent(query)}&type=track&limit=20`
     );
     
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `Erreur ${response.status}`);
-    }
+    // Recherche des playlists
+    const playlistsResponse = await fetch(
+      `http://localhost:3000/api/deezer/search?q=${encodeURIComponent(query)}&type=playlist&limit=20`
+    );
     
-    const data = await response.json();
+    const [tracksData, playlistsData] = await Promise.all([
+      tracksResponse.json(),
+      playlistsResponse.json()
+    ]);
     
-    if (data.data && data.data.length > 0) {
+    const tracks = tracksData.data || [];
+    const playlists = playlistsData.data || [];
+    
+    if (tracks.length > 0 || playlists.length > 0) {
       // Stocker les résultats
-      localStorage.setItem('search_results', JSON.stringify(data.data));
+      const searchResults = {
+        tracks: tracks,
+        playlists: playlists,
+        query: query,
+        timestamp: new Date().toISOString()
+      };
+      
+      localStorage.setItem('search_results', JSON.stringify(searchResults));
       localStorage.setItem('search_query', query);
       
-      alert(`✅ ${data.data.length} résultats trouvés !`);
+      // Afficher le message avec tous les détails
+      const totalResults = tracks.length + playlists.length;
+  
       
-      // Rediriger vers la page des résultats
+     
+      
+      // SOLUTION : Utiliser window.location au lieu de router.push
       setTimeout(() => {
-        router.push('/search-results');
+        window.location.href = '/search-results'; // Redirection directe
       }, 500);
       
     } else {
-      alert('ℹ️ Aucun résultat trouvé');
+      Toast.success(' Aucun résultat trouvé');
     }
+    
   } catch (error) {
     console.error('Erreur recherche:', error);
-    alert('❌ Erreur lors de la recherche');
+    Toast.error('❌ Erreur lors de la recherche');
   }
   
   searchQuery.value = '';
 };
+
 
 // Toggle compte menu
 const toggleAccountMenu = () => {

@@ -1,12 +1,20 @@
 {
   "playlists": [
     {
-      "id": 2,
-      "name": "loijhg",
+      "id": 1,
+      "name": "YUU",
       "description": "",
-      "musics": [],
-      "createdAt": "2025-12-11T22:48:29.396Z",
-      "updatedAt": "2025-12-11T22:48:29.396Z"
+      "musics": [
+        {
+          "id": 1765564020497,
+          "title": "The Fate of Ophelia",
+          "artist": "Artiste inconnu",
+          "album": "The Life of a Showgirl",
+          "addedAt": "2025-12-12T18:27:00.497Z"
+        }
+      ],
+      "createdAt": "2025-12-12T17:13:28.418Z",
+      "updatedAt": "2025-12-12T18:46:03.750Z"
     }
   ]
 }

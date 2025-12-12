@@ -58,6 +58,11 @@ const router = createRouter({
                         path: "/create/:id",
                         name: "SavePlaylist",
                         component: () => import("../view/SavePlaylistPage.vue")
+                    },
+                    {
+                        path: '/search-results',
+                        name: 'SearchResults',
+                        component: () => import("../view/SearchResults.vue")
                     }
                 ]
         },
