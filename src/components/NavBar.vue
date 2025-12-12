@@ -72,7 +72,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { Toast } from "../ui/Toast.js";
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -105,139 +104,52 @@ const handleLogout = () => {
   router.push('/');
 };
 
-const handleSearch = async (searchType = 'tracks') => {
+// Fonction recherche de musique - CORRIGÉE
+const handleSearch = async () => {
   const query = searchQuery.value.trim();
   
-  // Validation de la recherche
   if (!query) {
-    Toast.error('⚠️ Veuillez entrer un terme de recherche');
-    return;
-  }
-
-  // Vérification de la longueur de la recherche
-  if (query.length < 2) {
-    Toast.error('⚠️ La recherche doit contenir au moins 2 caractères');
+    // Créer une simple alerte si Toast n'est pas importé
+    alert('⚠️ Veuillez entrer un terme de recherche');
     return;
   }
 
   try {
-    // Afficher un loader pendant la recherche
-    Toast.loading('🔍 Recherche en cours...', { duration: 5000 });
+    // Simpler message
+    console.log('🔍 Recherche en cours...');
     
-    // Configuration de l'API en fonction du type de recherche
-    const apiConfig = {
-      tracks: {
-        endpoint: 'tracks',
-        params: 'format=json&limit=15&include=musicinfo&audioformat=mp32',
-        resultKey: 'tracks',
-        successMessage: (count) => `🎵 ${count} morceau(x) trouvé(s) !`,
-        fallbackMessage: 'Aucune musique trouvée'
-      },
-      albums: {
-        endpoint: 'albums',
-        params: 'format=json&limit=10&include=artistdetails',
-        resultKey: 'albums',
-        successMessage: (count) => `💿 ${count} album(s) trouvé(s) !`,
-        fallbackMessage: 'Aucun album trouvé'
-      },
-      artists: {
-        endpoint: 'artists',
-        params: 'format=json&limit=10&include=stats',
-        resultKey: 'artists',
-        successMessage: (count) => `🎤 ${count} artiste(s) trouvé(s) !`,
-        fallbackMessage: 'Aucun artiste trouvé'
-      }
-    };
-
-    const config = apiConfig[searchType] || apiConfig.tracks;
-    
-    // Construction de l'URL API
-    const apiUrl = `https://api.jamendo.com/v3.0/${config.endpoint}/?` +
-                   `client_id=${import.meta.env.VITE_JAMENDO_CLIENT_ID || 'YOUR_CLIENT_ID'}&` +
-                   `search=${encodeURIComponent(query)}&` +
-                   config.params;
-
-    // Appel à l'API
-    const response = await fetch(apiUrl);
+    const response = await fetch(
+      `http://localhost:3000/api/deezer/search?q=${encodeURIComponent(query)}&type=track&limit=20`
+    );
     
     if (!response.ok) {
-      throw new Error(`Erreur API: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Erreur ${response.status}`);
     }
     
     const data = await response.json();
-    const results = data.results || [];
     
-    if (results.length > 0) {
-      // Sauvegarder les résultats avec métadonnées
-      const searchData = {
-        query,
-        type: searchType,
-        results,
-        timestamp: new Date().toISOString(),
-        totalResults: data.headers?.results_total || results.length
-      };
+    if (data.data && data.data.length > 0) {
+      // Stocker les résultats
+      localStorage.setItem('search_results', JSON.stringify(data.data));
+      localStorage.setItem('search_query', query);
       
-      localStorage.setItem('search_results', JSON.stringify(searchData));
+      alert(`✅ ${data.data.length} résultats trouvés !`);
       
-      // Historique des recherches
-      const searchHistory = JSON.parse(localStorage.getItem('search_history') || '[]');
-      const historyItem = {
-        query,
-        type: searchType,
-        date: new Date().toISOString(),
-        resultCount: results.length
-      };
-      
-      // Limiter l'historique à 10 éléments
-      const updatedHistory = [historyItem, ...searchHistory.slice(0, 9)];
-      localStorage.setItem('search_history', JSON.stringify(updatedHistory));
-      
-      // Message de succès avec plus d'informations
-      Toast.success(
-        `✅ ${config.successMessage(results.length)}\n` +
-        `📍 Redirection vers ${searchType === 'tracks' ? 'playlist' : searchType}...`
-      );
-      
-      // Redirection selon le type de recherche
+      // Rediriger vers la page des résultats
       setTimeout(() => {
-        const redirectPath = searchType === 'tracks' ? '/playlist' : 
-                            searchType === 'albums' ? '/albums' : '/artists';
-        router.push({
-          path: redirectPath,
-          query: { 
-            search: query,
-            type: searchType,
-            resultsCount: results.length 
-          }
-        });
-      }, 1500);
+        router.push('/search-results');
+      }, 500);
       
     } else {
-      // Aucun résultat trouvé
-      Toast.error(`😕 ${config.fallbackMessage}\nEssayez avec d\'autres termes`);
-      
-      // Recherche de suggestions alternatives
-      await getSearchSuggestions(query);
+      alert('ℹ️ Aucun résultat trouvé');
     }
-    
   } catch (error) {
-    console.error('Erreur de recherche:', error);
-    
-    // Gestion des erreurs spécifiques
-    if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
-      Toast.error('🌐 Problème de connexion internet');
-    } else if (error.message.includes('429')) {
-      Toast.error('⚡ Trop de requêtes, veuillez patienter');
-    } else {
-      Toast.error('❌ Erreur lors de la recherche');
-    }
-    
-    // Fallback: recherche locale
-    await fallbackLocalSearch(query);
-  } finally {
-    // Réinitialiser le champ de recherche
-    searchQuery.value = '';
+    console.error('Erreur recherche:', error);
+    alert('❌ Erreur lors de la recherche');
   }
+  
+  searchQuery.value = '';
 };
 
 // Toggle compte menu

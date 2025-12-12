@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 const USERS_FILE = path.join(__dirname, 'users.json');
 const FAVORITES_FILE = path.join(__dirname, 'favorites.json');
 const DB_FILE = path.join(__dirname, 'db.json');
+const ALBUMS_FILE = path.join(__dirname, 'albums.json');
 
 // ====================== FONCTIONS UTILITAIRES ======================
 const readJSONFile = (filePath, defaultValue = []) => {
@@ -72,7 +73,7 @@ const isValidPassword = (password) => {
 
 // ====================== ROUTES USERS ======================
 // SIGNUP
-app.post('/signup', (req, res) => {
+app.post('/api/signup', (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -116,7 +117,7 @@ app.post('/signup', (req, res) => {
 });
 
 // SIGNIN
-app.post('/signin', (req, res) => {
+app.post('/api/signin', (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -551,6 +552,45 @@ app.delete('/api/playlists/:id', (req, res) => {
   } catch (error) {
     console.error('❌ Erreur DELETE /api/playlists/:id:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// ====================== ROUTES ALBUMS ======================
+app.get('/api/albums', (req, res) => {
+  try {
+    const albums = readJSONFile(ALBUMS_FILE);
+    res.json(albums);
+  } catch (err) {
+    console.error('❌ Erreur GET /api/albums:', err);
+    res.status(500).json({ error: 'Erreur lors de la récupération des albums' });
+  }
+});
+
+app.post('/api/albums', (req, res) => {
+  try {
+    const albums = readJSONFile(ALBUMS_FILE);
+    const { title, artist, cover, year } = req.body;
+    
+    if (!title || !artist) {
+      return res.status(400).json({ error: 'Titre et artiste sont requis' });
+    }
+    
+    const newAlbum = {
+      id: albums.length > 0 ? Math.max(...albums.map(a => a.id)) + 1 : 1,
+      title,
+      artist,
+      cover: cover || null,
+      year: year || null,
+      addedAt: new Date().toISOString()
+    };
+    
+    albums.push(newAlbum);
+    writeJSONFile(ALBUMS_FILE, albums);
+    
+    res.status(201).json(newAlbum);
+  } catch (err) {
+    console.error('❌ Erreur POST /api/albums:', err);
+    res.status(500).json({ error: 'Erreur lors de l\'ajout de l\'album' });
   }
 });
 
