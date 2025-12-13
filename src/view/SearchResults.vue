@@ -9,35 +9,17 @@
         <h1 class="page-title">Search</h1>
       </div>
       
-      <div class="search-box">
+  <!--     <div class="search-box">
         <input 
           type="text" 
           v-model="currentQuery"
           placeholder="Rechercher musique ou playlist..."
-          @keyup.enter="performSearch"
+          @keyup.enter="performSearch" 
         />
         <button class="search-btn" @click="performSearch">
           🔍
         </button>
-      </div>
-    </div>
-
-    <!-- Résumé de recherche -->
-    <div class="search-summary" v-if="hasResults">
-      <h2 class="results-title">
-        Résultats pour : "<span class="query-text">{{ searchQuery }}</span>"
-      </h2>
-      <div class="results-count">
-        <span class="count-badge tracks-count">
-          🎵 {{ tracks.length }} music
-        </span>
-        <span class="count-badge playlists-count">
-          📁 {{ playlists.length }} playlists
-        </span>
-        <span class="total-count">
-          {{ totalResults }} final result 
-        </span>
-      </div>
+      </div> -->
     </div>
 
     <!-- Section Musiques -->
