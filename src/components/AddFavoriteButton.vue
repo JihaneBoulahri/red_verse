@@ -6,7 +6,6 @@
     :class="{ 'active': isFavorite }"
   >
     {{ isFavorite ? "★" : "☆" }}
-    <span class="fav-text">{{ isFavorite ? 'Favori' : 'Ajouter' }}</span>
   </button>
 </template>
 
@@ -109,8 +108,7 @@ export default {
 
       } catch (error) {
         this.isFavorite = previousState;
-        console.error("Erreur toggle favori:", error);
-        alert(`Erreur: ${error.message}`);
+        console.error("Erreur :", error);
       } finally {
         this.loading = false;
       }

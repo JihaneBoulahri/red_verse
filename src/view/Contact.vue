@@ -54,13 +54,12 @@
 
 <script setup>
 import bg from "../assets/contact-bg.png";
-import { Toast } from "../ui/Toast.js";
+import { Toast } from '../ui/Toast.js'
 
 function sendMessage() {
   console.log("Message sent");
   Toast.success("success!");
-  /* Toast.info("Your message has been sent!");
-  Toast.error("err!"); */
+  
 }
 
 </script>

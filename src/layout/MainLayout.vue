@@ -11,6 +11,8 @@
         <router-view />
       </div>
     </div>
+    <!-- Global audio player shown on every page -->
+    <GlobalPlayer />
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import NavBar from '../components/NavBar.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import SideBar from '../components/SideBar.vue'
+import GlobalPlayer from '../components/GlobalPlayer.vue'
 
 const route = useRoute()
 const showNav = computed(() => route.meta.showNav ?? true)

@@ -65,9 +65,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { Toast } from '../ui/Toast.js';
 import AddFavoriteBtn from '../components/AddFavoriteButton.vue';
 import AddPlaylistButton from '../components/AddPlaylistButton.vue'
+import { Toast } from '../ui/Toast.js'
 
 const router = useRouter();
 const route = useRoute();
@@ -105,7 +105,7 @@ onMounted(async () => {
   playlistId.value = route.params.id;
 
   if (!playlistId.value) {
-    Toast.error("Playlist non trouvée");
+    Toast.error("❗Playlist non trouvée");
     router.back();
     return;
   }
@@ -149,7 +149,7 @@ onMounted(async () => {
       }
     } catch (fallbackError) {
       console.error('Erreur fallback:', fallbackError);
-      Toast.error("Erreur lors du chargement des tracks");
+      Toast.error("❗Erreur lors du chargement des tracks");
     }
   } finally {
     loading.value = false;

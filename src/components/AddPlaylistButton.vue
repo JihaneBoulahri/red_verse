@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { Toast } from '../ui/Toast.js'
 export default {
   name: 'AddPlaylistButton',
   props: {
@@ -109,7 +110,7 @@ export default {
 
     async addToPlaylist(playlist) {
       if (this.isMusicInPlaylist(playlist)) {
-        alert('Déjà dans cette playlist !');
+        Toast.error('❗Déjà dans cette playlist !');
         return;
       }
 
@@ -121,14 +122,13 @@ export default {
         });
 
         this.isInPlaylist = true;
-        alert(`Ajouté à "${playlist.name}" !`);
+        Toast.success(`Ajouté à "${playlist.name}" !`);
         this.closeModal();
         
         // Émettre un événement
         this.$emit('added', { music: this.music, playlist: playlist.name });
       } catch (err) {
         console.error('Erreur ajout playlist:', err);
-        alert('Erreur lors de l\'ajout');
       }
     },
 
@@ -149,7 +149,7 @@ export default {
         const newPlaylist = await res.json();
         
         this.isInPlaylist = true;
-        alert(`Playlist "${name}" créée avec "${this.music}" !`);
+        Toast.success(`Playlist "${name}" créée avec "${this.music}" !`);
         this.closeModal();
         
         // Émettre un événement
@@ -157,7 +157,6 @@ export default {
         this.$emit('added', { music: this.music, playlist: name });
       } catch (err) {
         console.error('Erreur création playlist:', err);
-        alert('Erreur lors de la création');
       }
     }
   }

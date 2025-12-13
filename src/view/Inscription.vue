@@ -141,8 +141,9 @@
 import { ref } from "vue";
 import bg from "../assets/contact-bg.png";
 import { isValidEmail, isValidPassword } from "../services/Valide.js";
-import { Toast } from "../ui/Toast.js";
 import { useRouter } from "vue-router";
+import { Toast } from '../ui/Toast.js'
+
 
 const router = useRouter();
 
@@ -234,7 +235,7 @@ const handleSubmit = async () => {
   }
 
   if (Object.values(errors.value).some((e) => e)) {
-    Toast.error("Veuillez corriger les erreurs");
+    Toast.error("❗Veuillez corriger les erreurs");
     return;
   }
 

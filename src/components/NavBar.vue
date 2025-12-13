@@ -72,6 +72,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { Toast } from '../ui/Toast.js'
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -104,13 +105,12 @@ const handleLogout = () => {
   router.push('/');
 };
 
-// Fonction recherche de musique - CORRIGÉE
+// Fonction recherche de musique 
 const handleSearch = async () => {
   const query = searchQuery.value.trim();
   
   if (!query) {
-    // Créer une simple alerte si Toast n'est pas importé
-    alert('⚠️ Veuillez entrer un terme de recherche');
+    Toast.info("⚠️ you should enter a search term");
     return;
   }
 
@@ -134,7 +134,7 @@ const handleSearch = async () => {
       localStorage.setItem('search_results', JSON.stringify(data.data));
       localStorage.setItem('search_query', query);
       
-      alert(`✅ ${data.data.length} résultats trouvés !`);
+      console.log(`✅ ${data.data.length} résultats trouvés !`);
       
       // Rediriger vers la page des résultats
       setTimeout(() => {
@@ -142,11 +142,11 @@ const handleSearch = async () => {
       }, 500);
       
     } else {
-      alert('ℹ️ Aucun résultat trouvé');
+      console.log('ℹ️ Aucun résultat trouvé');
     }
   } catch (error) {
     console.error('Erreur recherche:', error);
-    alert('❌ Erreur lors de la recherche');
+    Toast.error('❗ Erreur lors de la recherche');
   }
   
   searchQuery.value = '';

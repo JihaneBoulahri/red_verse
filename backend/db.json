@@ -1,12 +1,20 @@
 {
   "playlists": [
     {
-      "id": 2,
-      "name": "loijhg",
+      "id": 1,
+      "name": "jiji",
       "description": "",
       "musics": [],
-      "createdAt": "2025-12-11T22:48:29.396Z",
-      "updatedAt": "2025-12-11T22:48:29.396Z"
+      "createdAt": "2025-12-12T17:53:52.450Z",
+      "updatedAt": "2025-12-12T17:53:52.450Z"
+    },
+    {
+      "id": 2,
+      "name": "nxzkxn",
+      "description": "",
+      "musics": [],
+      "createdAt": "2025-12-12T18:00:02.809Z",
+      "updatedAt": "2025-12-12T18:00:02.809Z"
     }
   ]
 }
