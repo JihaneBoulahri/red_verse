@@ -1,6 +1,6 @@
 <template>
   <div @click="onPlay" class="track-card">
-    <img :src="track.album?.cover_small || track.album?.cover_medium || ''" class="thumb" />
+    <img :src="cover" class="thumb" @error="handleImageError" />
     <div class="meta">
       <h4 class="title">{{ track.title }}</h4>
       <p class="artist">{{ track.artist?.name }}</p>
@@ -8,7 +8,16 @@
     </div>
     <div class="z-[99999]" @click.stop>
       <AddFavoriteButton :music="track.title" :album="track.album?.title || 'Unknown'" />
-      <AddPlaylistButton :track="track" />
+      <AddPlaylistButton 
+              :music="track.title"
+              :album="track.album?.title || 'Unknown'"
+              :artist="track.artist?.name || 'Unknown'"
+              :preview="track.preview || null"
+              :id="track.id"
+              @added="onMusicAddedToPlaylist"
+              @playlist-created="onPlaylistCreated"
+              
+            />
     </div>
   </div>
 </template>
@@ -26,12 +35,23 @@ export default {
   emits: ['play'],
   computed: {
     cover() {
-      return (
-        this.track.album?.cover_small ||
-        this.track.album?.cover_medium ||
-        'https://via.placeholder.com/64x64?text=🎵'
-      )
+      const small = this.track.album?.cover_small || this.track.cover_small || null
+      const medium = this.track.album?.cover_medium || this.track.cover_medium || null
+      if (small) return small
+      if (medium) return medium
+      const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>" +
+        "<rect width='100%' height='100%' fill='#0f1720'/>" +
+        "<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='#9ca3af' font-family='Arial'>♪</text>" +
+        "</svg>"
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg)
     }
+  },
+  methods: {
+    handleImageError(e) {
+      e.target.src = this.cover
+    },
+    onMusicAddedToPlaylist() {},
+    onPlaylistCreated() {}
   },
   methods: {
     onPlay() {

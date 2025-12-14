@@ -8,7 +8,6 @@
         <div class="playlist-info">
           <h1 class="playlist-title-large">{{ playlist.title }}</h1>
           <p class="playlist-desc">{{ playlist.nb_tracks }} tracks</p>
-          <button class="play-all-btn">▶ Écouter tout</button>
         </div>
       </div>
     </div>
@@ -38,6 +37,7 @@
           class="track-row"
           v-for="(track, index) in tracks"
           :key="track.id"
+          @click="player.play(track)"
         >
           <span class="col-number">{{ index + 1 }}</span>
           <span class="col-title">{{ track.title }}</span>
@@ -47,14 +47,23 @@
           <span class="col-album">{{ track.album?.title || 'Album inconnu' }}</span>
           <span class="col-duration">{{ formatDuration(track.duration) }}</span>
           <span class="col-action">
-            <button class="track-play-btn">▶</button>
             <AddPlaylistButton 
               :music="track.title"
               :album="track.album?.title || 'Unknown'"
+              :artist="track.artist?.name || 'Unknown'"
+              :preview="track.preview || ''"
+              :id="track.id"
               @added="onMusicAddedToPlaylist"
               @playlist-created="onPlaylistCreated"
+              
             />
-            <AddFavoriteBtn :music="track.title" :album="track.album?.title || 'Unknown'" />
+            <AddFavoriteBtn 
+              :music="track.title" 
+              :album="track.album?.title || 'Unknown'"
+              :artist="track.artist?.name || 'Unknown'"
+              :id="track.id"
+              @click.stop
+            />
           </span>
         </div>
       </div>
@@ -65,9 +74,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { Toast } from '../ui/Toast.js';
 import AddFavoriteBtn from '../components/AddFavoriteButton.vue';
 import AddPlaylistButton from '../components/AddPlaylistButton.vue'
-import { Toast } from '../ui/Toast.js'
+import player from '../services/player';
 
 const router = useRouter();
 const route = useRoute();
@@ -79,11 +89,11 @@ const playlistId = ref(null);
 
 // Méthodes pour gérer les événements
 const onMusicAddedToPlaylist = (event) => {
-  console.log(`🎵 ${event.music} ajouté à la playlist: ${event.playlist}`);
+  Toast.success(`🎵 ${event.music} ajouté à la playlist: ${event.playlist}`);
 };
 
 const onPlaylistCreated = (playlist) => {
-  console.log(`✅ Nouvelle playlist créée: ${playlist.name}`);
+  Toast.success(`✅ Nouvelle playlist créée: ${playlist.name}`);
 };
 // Format duration (seconds to MM:SS)
 const formatDuration = (seconds) => {
@@ -105,7 +115,7 @@ onMounted(async () => {
   playlistId.value = route.params.id;
 
   if (!playlistId.value) {
-    Toast.error("❗Playlist non trouvée");
+    Toast.error("Playlist non trouvée");
     router.back();
     return;
   }
@@ -149,7 +159,7 @@ onMounted(async () => {
       }
     } catch (fallbackError) {
       console.error('Erreur fallback:', fallbackError);
-      Toast.error("❗Erreur lors du chargement des tracks");
+      Toast.error("Erreur lors du chargement des tracks");
     }
   } finally {
     loading.value = false;

@@ -36,12 +36,53 @@ export default {
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
-.cover { position: relative; width: 100%; height: 160px; }
-.cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.overlay { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.4)); opacity:0; transition: opacity .18s ease; }
-.playlist-card:hover .overlay { opacity: 1; }
-.play-btn { background: rgba(255,255,255,0.08); border: none; color: #fff; width:44px;height:44px;border-radius:9999px;font-size:18px; }
-.info { padding: 10px 12px; }
-.title { color: #fff; font-weight:600; font-size:0.95rem; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.meta { color: #9ca3af; font-size:0.8rem; margin-top:6px }
+.cover { 
+  position: relative; 
+  width: 100%; 
+  height: 160px; 
+}
+.cover img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+}
+.overlay { 
+  position: absolute; 
+  inset: 0; display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background: linear-gradient(180deg, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.4)); 
+  opacity:0; 
+  transition: opacity .18s ease; 
+}
+.playlist-card:hover .overlay { 
+  opacity: 1;
+}
+.play-btn { 
+  background: rgba(255,255,255,0.08); 
+  border: none; 
+  color: #fff; 
+  width:44px;
+  height:44px;
+  border-radius:9999px;
+  font-size:18px; 
+}
+.info { 
+  padding: 10px 12px; 
+}
+.title { 
+  color: #fff; 
+  font-weight:600; 
+  font-size:0.95rem; 
+  margin:0; 
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+}
+.meta { 
+  color: #9ca3af; 
+  font-size:0.8rem; 
+  margin-top:6px 
+}
 </style>

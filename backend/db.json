@@ -2,19 +2,117 @@
   "playlists": [
     {
       "id": 1,
-      "name": "jiji",
-      "description": "",
-      "musics": [],
-      "createdAt": "2025-12-12T17:53:52.450Z",
-      "updatedAt": "2025-12-12T17:53:52.450Z"
+      "name": "jihane",
+      "description": "Playlist créée le 14/12/2025",
+      "musics": [
+        {
+          "id": 1765678810764,
+          "title": "End of Beginning",
+          "artist": "Djo",
+          "album": "DECIDE",
+          "addedAt": "2025-12-14T02:20:10.764Z",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/d/3/0/8d3e2d737a96e28902c7edca8b18e1f7.mp3?hdnea=exp=1765680272~acl=/api/1/1/8/d/3/0/8d3e2d737a96e28902c7edca8b18e1f7.mp3*~data=user_id=0,application_id=42~hmac=cf29b2acdcb381719888d2f4ae1bdd1654e8e2e3a448874684d7fe033d87da0e",
+          "cover_small": "https://cdn-images.dzcdn.net/images/cover/f13749b2a226afa7f5f866ce2f4d3015/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f13749b2a226afa7f5f866ce2f4d3015/250x250-000000-80-0-0.jpg",
+          "deezerId": 1899060227
+        },
+        {
+          "id": 1765678834849,
+          "title": "I Don't Care",
+          "artist": "CRUNKZ",
+          "album": "I Don't Care",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/2/d/0/62d934dd97e04a8cc2c46c68920604dc.mp3?hdnea=exp=1765679730~acl=/api/1/1/6/2/d/0/62d934dd97e04a8cc2c46c68920604dc.mp3*~data=user_id=0,application_id=42~hmac=24da41066db3e29ae1ac33d32d8c0415e8a0b55d180a3b99d4df10890c2409c4",
+          "addedAt": "2025-12-14T02:20:34.849Z",
+          "cover_small": "https://cdn-images.dzcdn.net/images/cover/6ee17fa5df79f4cc97a1c7561dcfdfef/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://cdn-images.dzcdn.net/images/cover/6ee17fa5df79f4cc97a1c7561dcfdfef/250x250-000000-80-0-0.jpg",
+          "deezerId": 3608011272
+        },
+        {
+          "id": 1765679199836,
+          "title": "Halo",
+          "artist": "The Halo Effect",
+          "album": "March Of The Unheard (Bonus Edition)",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/a/6/0/1a6bea8d40fcae681260049df22f93cf.mp3?hdnea=exp=1765679888~acl=/api/1/1/1/a/6/0/1a6bea8d40fcae681260049df22f93cf.mp3*~data=user_id=0,application_id=42~hmac=d7246bd3b29a694193a15f4f9121064af5a9b8d0d32215df506dcd05538b58d9",
+          "addedAt": "2025-12-14T02:26:39.836Z"
+        },
+        {
+          "id": 1765679395971,
+          "title": "Another Love (Zwette Edit)",
+          "artist": "Tom Odell",
+          "album": "Another Love (Zwette Edit)",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/5/2/1/0/521615213c66ef439dcd4de0a35381c6.mp3?hdnea=exp=1765680292~acl=/api/1/1/5/2/1/0/521615213c66ef439dcd4de0a35381c6.mp3*~data=user_id=0,application_id=42~hmac=4632baedf888522d9c2a685b519ac17aed1d760204df4c09baf4e5ff7914ec16",
+          "addedAt": "2025-12-14T02:29:55.971Z",
+          "cover_small": "https://cdn-images.dzcdn.net/images/cover/d5a463d73d5927d15467bf8692477a7a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://cdn-images.dzcdn.net/images/cover/d5a463d73d5927d15467bf8692477a7a/250x250-000000-80-0-0.jpg",
+          "deezerId": 71247303
+        },
+        {
+          "id": 1765682847225,
+          "title": "i walk this earth all by myself",
+          "artist": "EKKSTACY",
+          "album": "i walk this earth all by myself",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/4/c/0/74c5240369b9de9cd47a79921f17b437.mp3?hdnea=exp=1765683728~acl=/api/1/1/7/4/c/0/74c5240369b9de9cd47a79921f17b437.mp3*~data=user_id=0,application_id=42~hmac=2d7e690a12df52628e86ca4e6f0c2ec4e7538d14c1391e05a4793dd20067b454",
+          "addedAt": "2025-12-14T03:27:27.225Z"
+        },
+        {
+          "id": 1765683003018,
+          "title": "Smalltown Boy",
+          "artist": "Bronski Beat",
+          "album": "The Age of Consent",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/0/b/d/0/0bd67a2e97f0fd8a55101393279e8276.mp3?hdnea=exp=1765683897~acl=/api/1/1/0/b/d/0/0bd67a2e97f0fd8a55101393279e8276.mp3*~data=user_id=0,application_id=42~hmac=07eaa5b2bf489774c02410e5d41151e9c35bdce94de1d59cf0a79d52e7407ffd",
+          "addedAt": "2025-12-14T03:30:03.018Z"
+        },
+        {
+          "id": 1765683443446,
+          "title": "Adriano",
+          "artist": "Adriano Canosa",
+          "album": "La voce di Adriano",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/a/d/0/9ad3c7040d1f26ae0c4f1f330694a23f.mp3?hdnea=exp=1765679889~acl=/api/1/1/9/a/d/0/9ad3c7040d1f26ae0c4f1f330694a23f.mp3*~data=user_id=0,application_id=42~hmac=bc0defaf2726124b0d466882a734ba3eedab75423a87f0e17f733994c79f58b6",
+          "addedAt": "2025-12-14T03:37:23.446Z"
+        },
+        {
+          "id": 1765683469792,
+          "title": "Me and the Devil",
+          "artist": "Soap&Skin",
+          "album": "Sugarbread",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/0/6/b/0/06bd55bab0ba2332e61b6942485c7374.mp3?hdnea=exp=1765684366~acl=/api/1/1/0/6/b/0/06bd55bab0ba2332e61b6942485c7374.mp3*~data=user_id=0,application_id=42~hmac=b7b3d596a22f0553a69a274957e60b68c2ef3190268a680b832f5083dcf1ad73",
+          "addedAt": "2025-12-14T03:37:49.792Z"
+        },
+        {
+          "id": 1765683509466,
+          "title": "Zehra (Instrumental)",
+          "artist": "Ultra Beats",
+          "album": "Belle",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/4/f/0/94f8757a5e27185408b182b1f07c8193.mp3?hdnea=exp=1765684406~acl=/api/1/1/9/4/f/0/94f8757a5e27185408b182b1f07c8193.mp3*~data=user_id=0,application_id=42~hmac=1c1d42f3fc2dbbcc0997966c207377cc18af00cf8d2633f236b61d05c7343109",
+          "addedAt": "2025-12-14T03:38:29.466Z"
+        }
+      ],
+      "createdAt": "2025-12-14T02:20:10.772Z",
+      "updatedAt": "2025-12-14T03:38:29.480Z"
     },
     {
       "id": 2,
-      "name": "nxzkxn",
-      "description": "",
-      "musics": [],
-      "createdAt": "2025-12-12T18:00:02.809Z",
-      "updatedAt": "2025-12-12T18:00:02.809Z"
+      "name": "hh",
+      "description": "Playlist créée le 14/12/2025",
+      "musics": [
+        {
+          "id": 1765683314132,
+          "title": "APT.",
+          "artist": "Journey",
+          "album": "Separate Ways (Worlds Apart) (Bryce Miller/Alloy Tracks Remix)",
+          "addedAt": "2025-12-14T03:35:14.132Z"
+        },
+        {
+          "id": 1765683384913,
+          "title": "Soldier, Poet, King",
+          "artist": "The Oh Hellos",
+          "album": "Dear Wormwood",
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/4/c/0/d4c2ad95f0cb01290112131c16172557.mp3?hdnea=exp=1765684281~acl=/api/1/1/d/4/c/0/d4c2ad95f0cb01290112131c16172557.mp3*~data=user_id=0,application_id=42~hmac=a32aa6fdedf58999ccbfc7da3030502cf0fb0cf69881a84b9346cd1329cb35d0",
+          "addedAt": "2025-12-14T03:36:24.913Z"
+        }
+      ],
+      "createdAt": "2025-12-14T03:35:14.145Z",
+      "updatedAt": "2025-12-14T03:36:24.934Z"
     }
   ]
 }

@@ -2,7 +2,6 @@
   <button 
     @click="toggleFavorite" 
     class="fav-btn"
-    :title="isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'"
     :class="{ 'active': isFavorite }"
   >
     {{ isFavorite ? "★" : "☆" }}
@@ -10,6 +9,7 @@
 </template>
 
 <script>
+import { Toast } from "../ui/Toast.js";
 export default {
   name: 'AddFavoritesButton',
   props: {
@@ -28,7 +28,7 @@ export default {
     return { 
       isFavorite: false,
       loading: false,
-      favoriteId: null // <- ID du favori si déjà dans la liste
+      favoriteId: null 
     };
   },
 
@@ -49,7 +49,7 @@ export default {
     async checkFavoriteStatus() {
       try {
         const res = await fetch("http://localhost:3000/api/favorites");
-        if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         const favs = await res.json();
 
         // Chercher le favori correspondant
@@ -57,7 +57,7 @@ export default {
         this.isFavorite = !!fav;
         this.favoriteId = fav ? fav.id : null;
       } catch (error) {
-        console.error("Erreur vérification favori:", error);
+        Toast.error("Favorite check error:", error);
       }
     },
 
@@ -67,12 +67,12 @@ export default {
       const previousState = this.isFavorite;
 
       try {
-        // Mettre à jour l'état pour feedback visuel
+        // Mettre à jour
         this.isFavorite = !this.isFavorite;
 
         if (!this.isFavorite) {
           // Supprimer le favori
-          if (!this.favoriteId) throw new Error("Impossible de supprimer: ID manquant");
+          if (!this.favoriteId) throw new Error("Unable to delete: Missing ID");
 
           const response = await fetch(`http://localhost:3000/api/favorites/${this.favoriteId}`, {
             method: "DELETE"
@@ -80,7 +80,7 @@ export default {
 
           if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
+            throw new Error(errorData.message || `Error HTTP: ${response.status}`);
           }
 
           console.log(`Favori supprimé: "${this.music}"`);
@@ -95,11 +95,11 @@ export default {
 
           if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
+            throw new Error(errorData.message || `Error HTTP: ${response.status}`);
           }
 
           const data = await response.json();
-          console.log(`Favori ajouté: "${this.music}"`);
+          Toast.success(`Favorite added: "${this.music}"`);
           this.favoriteId = data.favorite.id; // récupérer ID nouvellement créé
         }
 
@@ -108,7 +108,8 @@ export default {
 
       } catch (error) {
         this.isFavorite = previousState;
-        console.error("Erreur :", error);
+        console.error("Erreur toggle favori:", error);
+        Toast.error(`Erreur: ${error.message}`);
       } finally {
         this.loading = false;
       }

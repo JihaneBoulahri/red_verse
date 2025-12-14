@@ -62,12 +62,8 @@ export default {
 
         album: {
           title: f.album || "Unknown album",
-          cover_small:
-            f.cover_small ||
-            "https://via.placeholder.com/64x64?text=🎵",
-          cover_medium:
-            f.cover_medium ||
-            "https://via.placeholder.com/128x128?text=🎵"
+          cover_small: f.cover_small || null,
+          cover_medium: f.cover_medium || null
         }
       }));
     },
