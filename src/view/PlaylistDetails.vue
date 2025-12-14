@@ -2,7 +2,7 @@
   <div class="playlist-details-page">
     <!-- Header -->
     <div class="playlist-header">
-      <button @click="goBack" class="back-btn">← Retour</button>
+      <button @click="goBack" class="back-btn">← Back</button>
       <div class="header-content">
         <img v-if="playlist.picture_medium" :src="playlist.picture_medium" alt="cover" class="playlist-cover-large" />
         <div class="playlist-info">
@@ -14,22 +14,22 @@
 
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">
-      <p>Chargement des tracks…</p>
+      <p>Loading tracks…</p>
     </div>
 
     <!-- Tracks List -->
     <div v-else class="tracks-container">
       <div v-if="tracks.length === 0" class="empty-state">
-        <p>Aucune track disponible</p>
+        <p>No tracks available</p>
       </div>
 
       <div v-else class="tracks-list">
         <div class="tracks-header">
           <span class="col-number">#</span>
-          <span class="col-title">Titre</span>
-          <span class="col-artist">Artiste</span>
+          <span class="col-title">Title</span>
+          <span class="col-artist">Artist</span>
           <span class="col-album">Album</span>
-          <span class="col-duration">Durée</span>
+          <span class="col-duration">Duration</span>
           <span class="col-action">Action</span>
         </div>
 
@@ -89,11 +89,11 @@ const playlistId = ref(null);
 
 // Méthodes pour gérer les événements
 const onMusicAddedToPlaylist = (event) => {
-  Toast.success(`🎵 ${event.music} ajouté à la playlist: ${event.playlist}`);
+  Toast.success(`🎵 ${event.music} added to playlist: ${event.playlist}`);
 };
 
 const onPlaylistCreated = (playlist) => {
-  Toast.success(`✅ Nouvelle playlist créée: ${playlist.name}`);
+  Toast.success(`✅ New playlist created: ${playlist.name}`);
 };
 // Format duration (seconds to MM:SS)
 const formatDuration = (seconds) => {
@@ -115,7 +115,7 @@ onMounted(async () => {
   playlistId.value = route.params.id;
 
   if (!playlistId.value) {
-    Toast.error("Playlist non trouvée");
+    Toast.error("Playlist not found");
     router.back();
     return;
   }
@@ -137,10 +137,10 @@ onMounted(async () => {
     }
 
     if (playlist.value.title) {
-      Toast.success(`${playlist.value.title} chargée!`);
+      Toast.success(`${playlist.value.title} loaded!`);
     }
   } catch (error) {
-    console.error('Erreur:', error);
+    console.error('Error:', error);
     // Fallback: try using Deezer public API directly
     try {
       const playlistRes = await fetch(`https://api.deezer.com/playlist/${playlistId.value}`);
@@ -155,11 +155,11 @@ onMounted(async () => {
       }
 
       if (playlist.value.title) {
-        Toast.success(`${playlist.value.title} chargée!`);
+        Toast.success(`${playlist.value.title} loaded!`);
       }
     } catch (fallbackError) {
-      console.error('Erreur fallback:', fallbackError);
-      Toast.error("Erreur lors du chargement des tracks");
+      console.error('fallbackError:', fallbackError);
+      Toast.error("Error loading tracks");
     }
   } finally {
     loading.value = false;

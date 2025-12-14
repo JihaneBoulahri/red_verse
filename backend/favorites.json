@@ -1,71 +1,5 @@
 [
   {
-    "id": 41,
-    "music": "End of Beginning",
-    "album": "Mystery Trending Hitz Vol 1",
-    "artist": "Fast Track Records 300",
-    "deezerId": 2705143342,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/b/0/0/4b05593b2b943e2b31409ebdc4efe084.mp3?hdnea=exp=1765679822~acl=/api/1/1/4/b/0/0/4b05593b2b943e2b31409ebdc4efe084.mp3*~data=user_id=0,application_id=42~hmac=ca7c18b1afdeac62355834ba032dd3c0fcbc6fa5baff0e98dab86cad65206135",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/565a8fa4be1f5e669fac5a7bd4ff6dac/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/565a8fa4be1f5e669fac5a7bd4ff6dac/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:02.885Z"
-  },
-  {
-    "id": 42,
-    "music": "i walk this earth all by myself",
-    "album": "i walk this earth all by myself",
-    "artist": "EKKSTACY",
-    "deezerId": 1237460052,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/4/c/0/74c5240369b9de9cd47a79921f17b437.mp3?hdnea=exp=1765679860~acl=/api/1/1/7/4/c/0/74c5240369b9de9cd47a79921f17b437.mp3*~data=user_id=0,application_id=42~hmac=b3c21fe5040014ea9a108b6c12dbe7e2d35b25789e9f36b1adcf2478cbabbdd1",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/3dd8282baf6f700b817eb08939947f7d/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/3dd8282baf6f700b817eb08939947f7d/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:40.546Z"
-  },
-  {
-    "id": 43,
-    "music": "APT.",
-    "album": "Separate Ways (Worlds Apart) (Bryce Miller/Alloy Tracks Remix)",
-    "artist": "Journey",
-    "deezerId": 1712756577,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/1/3/0/1130e9e1b384935f76dd1b53cdad22df.mp3?hdnea=exp=1765679863~acl=/api/1/1/1/1/3/0/1130e9e1b384935f76dd1b53cdad22df.mp3*~data=user_id=0,application_id=42~hmac=5e48d34ba02fcece58687b8ca4bfe9c5d915d100ff6a588709f92d7bbf832000",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/dc5688a7cf61b8aa35db99e135637128/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/dc5688a7cf61b8aa35db99e135637128/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:43.145Z"
-  },
-  {
-    "id": 44,
-    "music": "NINAO",
-    "album": "Avant Yaro",
-    "artist": "Yaro",
-    "deezerId": 354054831,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/1/e/0/11e3914b22b3d948d2480b95215b4c6f.mp3?hdnea=exp=1765679864~acl=/api/1/1/1/1/e/0/11e3914b22b3d948d2480b95215b4c6f.mp3*~data=user_id=0,application_id=42~hmac=59cca03434af25c419e61e770ed7d51d506d779dbf8a8800c0e8a2fdfff3ea53",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/b6901a574b5ff0351a982c108ad4cf22/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/b6901a574b5ff0351a982c108ad4cf22/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:44.775Z"
-  },
-  {
-    "id": 45,
-    "music": "NANANI NANANA",
-    "album": "I Hear You – Bonus Tracks Edition",
-    "artist": "Peggy Gou",
-    "deezerId": 2981007851,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/b/b/0/6bb89e6612400af4316ac006faf395ee.mp3?hdnea=exp=1765679866~acl=/api/1/1/6/b/b/0/6bb89e6612400af4316ac006faf395ee.mp3*~data=user_id=0,application_id=42~hmac=9753559135b183ebcce8124a51e67a5faf2a48ffcbbc879e3e33c9aca8fb914c",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/90e9e99dde4268ece1f86b7e7afab1c8/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/90e9e99dde4268ece1f86b7e7afab1c8/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:46.763Z"
-  },
-  {
-    "id": 46,
-    "music": "SOIS PAS TIMIDE",
-    "album": "SOIS PAS TIMIDE",
-    "artist": "GIMS",
-    "deezerId": 2892756462,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/7/8/0/478c6134f771ee585b78c9ad7f8a59b8.mp3?hdnea=exp=1765679868~acl=/api/1/1/4/7/8/0/478c6134f771ee585b78c9ad7f8a59b8.mp3*~data=user_id=0,application_id=42~hmac=bef6fd73c6acd9bdfd84641eb1be2ffd637c7ae027a4102d2ee58c88d1330c99",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/b8aef8cc26ace563628bf41bb7fdcb67/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/b8aef8cc26ace563628bf41bb7fdcb67/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:48.076Z"
-  },
-  {
     "id": 47,
     "music": "CIEL",
     "album": "Hasta La Cima Del Cielo (Edición Aniversario Remasterizado)",
@@ -75,17 +9,6 @@
     "cover_small": "https://cdn-images.dzcdn.net/images/cover/52e86d5a76d953fecca78815c4bae17a/56x56-000000-80-0-0.jpg",
     "cover_medium": "https://cdn-images.dzcdn.net/images/cover/52e86d5a76d953fecca78815c4bae17a/250x250-000000-80-0-0.jpg",
     "addedAt": "2025-12-14T02:22:50.008Z"
-  },
-  {
-    "id": 48,
-    "music": "Me and the Devil",
-    "album": "Only God Forgives (Original Motion Picture Soundtrack) [Deluxe Edition]",
-    "artist": "Cliff Martinez",
-    "deezerId": 70782517,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/b/4/3/0/b43544477c3ebc4393725565a3c07d5b.mp3?hdnea=exp=1765679871~acl=/api/1/1/b/4/3/0/b43544477c3ebc4393725565a3c07d5b.mp3*~data=user_id=0,application_id=42~hmac=575ba8fbe2b8ee3bc13a09b2db9f4b25449abd353a5d94c8cf20c4b2994946a6",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/22246655672016c8eaa77c1a2366f3d1/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/22246655672016c8eaa77c1a2366f3d1/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:50.975Z"
   },
   {
     "id": 49,
@@ -99,69 +22,14 @@
     "addedAt": "2025-12-14T02:22:52.815Z"
   },
   {
-    "id": 50,
-    "music": "Un monde à l'autre",
-    "album": "Un monde à l'autre",
-    "artist": "GP Explorer",
-    "deezerId": 3538842341,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/e/4/0/4e49031b26e757e8788eb2b64f44407f.mp3?hdnea=exp=1765679874~acl=/api/1/1/4/e/4/0/4e49031b26e757e8788eb2b64f44407f.mp3*~data=user_id=0,application_id=42~hmac=5291372fd4333a8e8be3a6d4defc479d13ac6324d259b6fa1f7a7ab978302487",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/b145cecf32cc3d22c251ff0e994b912b/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/b145cecf32cc3d22c251ff0e994b912b/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:54.356Z"
-  },
-  {
-    "id": 51,
-    "music": "Je suis en train de serrer",
-    "album": "TP sur TP",
-    "artist": "Jul",
-    "deezerId": 3689236752,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/6/b/0/86be58c2da9b741a5c25d3e7e71c11a6.mp3?hdnea=exp=1765679877~acl=/api/1/1/8/6/b/0/86be58c2da9b741a5c25d3e7e71c11a6.mp3*~data=user_id=0,application_id=42~hmac=a43ec981eb01d3305b88178bbf24150f05de60ccc43b2be383ee461147f6f994",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/1f20d5280aff274be4cf8e5df6dba6ae/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/1f20d5280aff274be4cf8e5df6dba6ae/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:22:57.102Z"
-  },
-  {
-    "id": 52,
-    "music": "Thunes",
-    "album": "Tomorrow Wendy (Day One Basic Vocal Track 1989) [feat. Johnette Napolitano & Scott Thunes]",
-    "artist": "Andy Prieboy",
-    "deezerId": 123750212,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/8/6/0/68672e5a2a9f4a548dfe0d7a7072d71e.mp3?hdnea=exp=1765679886~acl=/api/1/1/6/8/6/0/68672e5a2a9f4a548dfe0d7a7072d71e.mp3*~data=user_id=0,application_id=42~hmac=fb7b206c91c062a301c13ff917dc478ed2f6ceb37a078b540177c62df82482c4",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/891a2e35f7b006aece7c253b76a2359c/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/891a2e35f7b006aece7c253b76a2359c/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:23:06.635Z"
-  },
-  {
-    "id": 53,
-    "music": "Halo",
-    "album": "March Of The Unheard (Bonus Edition)",
-    "artist": "The Halo Effect",
-    "deezerId": 3308796771,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/a/6/0/1a6bea8d40fcae681260049df22f93cf.mp3?hdnea=exp=1765679888~acl=/api/1/1/1/a/6/0/1a6bea8d40fcae681260049df22f93cf.mp3*~data=user_id=0,application_id=42~hmac=d7246bd3b29a694193a15f4f9121064af5a9b8d0d32215df506dcd05538b58d9",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/99ad5756c9f4024aa47cc69831e2bf6c/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/99ad5756c9f4024aa47cc69831e2bf6c/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:23:08.071Z"
-  },
-  {
-    "id": 54,
-    "music": "Adriano",
-    "album": "La voce di Adriano",
-    "artist": "Adriano Canosa",
-    "deezerId": 65477255,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/a/d/0/9ad3c7040d1f26ae0c4f1f330694a23f.mp3?hdnea=exp=1765679889~acl=/api/1/1/9/a/d/0/9ad3c7040d1f26ae0c4f1f330694a23f.mp3*~data=user_id=0,application_id=42~hmac=bc0defaf2726124b0d466882a734ba3eedab75423a87f0e17f733994c79f58b6",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/7bf09898275c392a96eb2794cd3ba2d6/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/7bf09898275c392a96eb2794cd3ba2d6/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:23:09.955Z"
-  },
-  {
-    "id": 55,
-    "music": "Unstoppable",
-    "album": "Unstoppable",
-    "artist": "Sia",
-    "deezerId": 117708444,
-    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/b/6/f/0/b6fd78bfc5ececa8a18b07f54cbfb6f9.mp3?hdnea=exp=1765679891~acl=/api/1/1/b/6/f/0/b6fd78bfc5ececa8a18b07f54cbfb6f9.mp3*~data=user_id=0,application_id=42~hmac=0c160bc042ea70c124adbd4e3b2143ef75a9cc1a52b61de76a0de5c20c3e0329",
-    "cover_small": "https://cdn-images.dzcdn.net/images/cover/5a86a131864e4bfdda6c45c31fdbee3d/56x56-000000-80-0-0.jpg",
-    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5a86a131864e4bfdda6c45c31fdbee3d/250x250-000000-80-0-0.jpg",
-    "addedAt": "2025-12-14T02:23:11.982Z"
+    "id": 57,
+    "music": "Tamally Maak",
+    "album": "Tamally Maak",
+    "artist": "Amr Diab",
+    "deezerId": 81102882,
+    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/7/4/0/d74d9c75f962996dc4b55cedaa5ce90b.mp3?hdnea=exp=1765708231~acl=/api/1/1/d/7/4/0/d74d9c75f962996dc4b55cedaa5ce90b.mp3*~data=user_id=0,application_id=42~hmac=fefb58f015cdab2d31fe6d67e9f5428fb858c6fb9df6838c07739c6bb96fd603",
+    "cover_small": "https://cdn-images.dzcdn.net/images/cover/123994eb2834a27c0832210a7cce6e16/56x56-000000-80-0-0.jpg",
+    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/123994eb2834a27c0832210a7cce6e16/250x250-000000-80-0-0.jpg",
+    "addedAt": "2025-12-14T10:15:32.643Z"
   }
 ]

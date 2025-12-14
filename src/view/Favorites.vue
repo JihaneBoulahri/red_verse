@@ -2,19 +2,19 @@
   <div class="favorites">
     <h1>❤️ Favorites</h1>
 
-    <button @click="load" class="refresh-btn">🔄 Rafraîchir</button>
+    <button @click="load" class="refresh-btn">🔄 Refresh</button>
 
-    <div v-if="loading" class="loading">Chargement...</div>
+    <div v-if="loading" class="loading">Loading..</div>
 
     <div v-else-if="favorites.length === 0" class="empty">
-      Aucun favori pour le moment
+      No favorite at the moment
     </div>
 
     <div v-else>
       <!-- Stats -->
       <div class="stats">
-        <span class="stat">🎵 {{ favorites.length }} titres</span>
-        <span class="stat">🎤 {{ uniqueArtists }} artistes</span>
+        <span class="stat">🎵 {{ favorites.length }} titles</span>
+        <span class="stat">🎤 {{ uniqueArtists }} artists</span>
         <span class="stat">💿 {{ uniqueAlbums }} albums</span>
       </div>
 
@@ -105,7 +105,7 @@ export default {
         else if (data?.data) this.favorites = data.data;
         else this.favorites = [];
       } catch (err) {
-        Toast.error("Impossible de charger les favoris");
+        Toast.error("Unable to load favorites");
         console.error(err);
       } finally {
         this.loading = false;
@@ -115,7 +115,7 @@ export default {
     /* ▶️ Play preview via global player */
     playTrack(track) {
       if (!track.preview) {
-        Toast.info("Aucun aperçu disponible");
+        Toast.info("No preview available");
         return;
       }
       player.play(track)

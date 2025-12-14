@@ -19,7 +19,7 @@
             <input
               v-model="username"
               type="text"
-              placeholder="Choisissez un nom unique"
+              placeholder="Choose a unique name"
               class="input"
               @blur="validateUsername"
             />
@@ -89,7 +89,7 @@
             class="btn-send"
           >
             <span v-if="!isLoading">
-              {{ tab === "signin" ? "Se connecter" : "S'inscrire" }}
+              {{ tab === "signin" ? "Log in" : "Sign up" }}
             </span>
             <span v-else>⏳Loading...</span>
           </button>
@@ -101,35 +101,35 @@
         <!-- Right Side - Info / Toggle -->
         <div class="right-side">
           <h2 class="section-title">
-            {{ tab === "signin" ? "Pas de compte?" : "Vous avez un compte?" }}
+            {{ tab === "signin" ? "No account?" : "You have an account?" }}
           </h2>
 
           <p class="info-text">
             {{ tab === "signin" 
-              ? "Créez un compte pour accéder à tous nos services et profiter de l'expérience RedVerse complète." 
-              : "Connectez-vous pour retrouver vos playlists, vos favoris et continuer votre aventure musicale." }}
+              ? "Create an account to access all our services and enjoy the full RedVerse experience." 
+              : "Log in to access your playlists, your favorites, and continue your musical adventure." }}
           </p>
 
           <button
             @click="toggleTab"
             class="btn-send mt-6"
           >
-            {{ tab === "signin" ? "Créer un compte" : "Se connecter" }}
+            {{ tab === "signin" ? "Create an account" : "Log in" }}
           </button>
 
           <!-- Features -->
           <div class="features-list mt-8">
             <div class="feature">
               <span class="icon">🎵</span>
-              <span>Découvrez la musique</span>
+              <span>Discover the music</span>
             </div>
             <div class="feature">
               <span class="icon">🎧</span>
-              <span>Playlists personnalisées</span>
+              <span>Custom Playlists</span>
             </div>
             <div class="feature">
               <span class="icon">❤️</span>
-              <span>Vos favoris en un clic</span>
+              <span>Your favorites in one click</span>
             </div>
           </div>
         </div>
@@ -167,28 +167,28 @@ const errors = ref({
 const validateUsername = () => {
   errors.value.username = "";
   if (tab.value === "signup" && username.value.length < 3) {
-    errors.value.username = "Min 3 caractères";
+    errors.value.username = "Min 3 characters";
   }
 };
 
 const validateEmail = () => {
   errors.value.email = "";
   if (!isValidEmail(email.value)) {
-    errors.value.email = "Email invalide";
+    errors.value.email = "Invalid email";
   }
 };
 
 const validatePassword = () => {
   errors.value.password = "";
   if (!isValidPassword(password.value)) {
-    errors.value.password = "Min 8 caractères (1 majuscule, 1 chiffre)";
+    errors.value.password = "Minimum 8 characters (1 uppercase letter, 1 number)";
   }
 };
 
 const validateConfirmPassword = () => {
   errors.value.confirmPassword = "";
   if (tab.value === "signup" && password.value !== confirmPassword.value) {
-    errors.value.confirmPassword = "Les mots de passe ne correspondent pas";
+    errors.value.confirmPassword = "The passwords do not match";
   }
 };
 
@@ -228,13 +228,13 @@ const handleSubmit = async () => {
     validateConfirmPassword();
 
     if (!acceptTerms.value) {
-      Toast.error("Acceptez les conditions d'utilisation");
+      Toast.error("Accept the terms of use");
       return;
     }
   }
 
   if (Object.values(errors.value).some((e) => e)) {
-    Toast.error("❗Veuillez corriger les erreurs");
+    Toast.error("❗Please correct the errors");
     return;
   }
 
@@ -252,7 +252,7 @@ const handleSubmit = async () => {
         }),
       });
 
-      if (!response.ok) throw new Error("Connexion échouée");
+      if (!response.ok) throw new Error("Connection failed");
 
       const data = await response.json();
       const userNameFromDb = data?.user?.username;
@@ -262,7 +262,7 @@ const handleSubmit = async () => {
         JSON.stringify({ username: userNameFromDb })
       );
 
-      Toast.success("Connexion réussie !");
+      Toast.success("Connection successful !");
       router.push("/dashboard");
       clearForm();
     }
@@ -279,7 +279,7 @@ const handleSubmit = async () => {
         }),
       });
 
-      if (!response.ok) throw new Error("Inscription échouée");
+      if (!response.ok) throw new Error("Registration failed");
 
       const data = await response.json();
 
@@ -288,13 +288,13 @@ const handleSubmit = async () => {
         JSON.stringify({ username: username.value })
       );
 
-      Toast.success("Inscription réussie ! Bienvenue !");
+      Toast.success("Inscription successful! Welcome!");
       router.push("/dashboard");
       clearForm();
       tab.value = "signin";
     }
   } catch (error) {
-    Toast.error(error.message || "Une erreur est survenue");
+    Toast.error(error.message || "An error has occurred");
     console.error(error);
   } finally {
     isLoading.value = false;

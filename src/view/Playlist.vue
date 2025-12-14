@@ -2,7 +2,7 @@
   <div class="playlist-page">
     <h1 class="page-title">🎵 Playlists</h1>
 
-    <div v-if="loading" class="loading">Chargement…</div>
+    <div v-if="loading" class="loading">Loading…</div>
 
     <div class="playlist-grid">
       <div

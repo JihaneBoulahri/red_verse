@@ -7,10 +7,10 @@
 
       <!-- Top Artists (Top 10) -->
       <section class="mt-8 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur border border-red-600/20 p-8 rounded-xl shadow-xl shadow-red-600/10">
-        <h3 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">🎤 Top 10 Artistes</h3>
+        <h3 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">🎤 Top 10 Artists</h3>
 
         <div v-if="topArtists.length === 0" class="text-center py-8">
-          <p class="text-gray-400">Chargement des artistes...</p>
+          <p class="text-gray-400">Loading artists...</p>
         </div>
 
         <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
@@ -23,7 +23,7 @@
         <h3 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">📚 Top 10 Playlists</h3>
 
         <div v-if="playlists.length === 0" class="text-center py-8">
-          <p class="text-gray-400">Chargement des playlists...</p>
+          <p class="text-gray-400">Loading  playlists...</p>
         </div>
 
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -39,7 +39,7 @@
         </h3>
 
         <div v-if="tracks.length === 0" class="text-center py-12">
-          <p class="text-gray-400 text-lg">Chargement des pistes...</p>
+          <p class="text-gray-400 text-lg">Loading tracks...</p>
         </div>
 
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 ">

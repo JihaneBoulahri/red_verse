@@ -6,13 +6,13 @@
   <!-- Modal pour ajouter à playlist -->
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
-      <h3>Ajouter "{{ music }}" à une playlist</h3>
+      <h3>Add "{{ music }}" to a playlist</h3>
       
       <div class="playlist-list">
-        <div v-if="loading">Chargement...</div>
+        <div v-if="loading">Loading...</div>
         
         <div v-else-if="playlists.length === 0">
-          <p>Aucune playlist. Créez-en une !</p>
+          <p>No playlists available. Create one.!</p>
         </div>
         
         <div v-else>
@@ -34,15 +34,14 @@
       <div class="create-section">
         <input 
           v-model="newPlaylistName" 
-          placeholder="Nom de la nouvelle playlist"
+          placeholder="Name of the new playlist"
           @keyup.enter="createPlaylist"
         />
-        <button @click="createPlaylist" :disabled="!newPlaylistName.trim()">Créer</button>
+        <button @click="createPlaylist" :disabled="!newPlaylistName.trim()">Add</button>
       </div>
 
       <div class="modal-actions">
-        <button @click="closeModal" class="close-btn">Fermer</button>
-        <button @click="refreshPlaylists" class="refresh-btn" title="Actualiser">🔄</button>
+        <button @click="closeModal" class="close-btn">Close</button>
       </div>
     </div>
   </div>

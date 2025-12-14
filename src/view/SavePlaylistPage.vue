@@ -11,19 +11,19 @@
       <div class="create-section">
         <input 
           v-model="newPlaylistName" 
-          placeholder="Nom de la nouvelle playlist..."
+          placeholder="Name of the new playlist..."
           @keyup.enter="createPlaylist"
         />
         <button @click="createPlaylist" :disabled="!newPlaylistName.trim()" class="create-btn">
-          + Créer Playlist
+          + Create Playlist
         </button>
       </div>
 
       <!-- Liste des playlists -->
       <div v-if="playlists.length === 0" class="empty-state">
         <div class="empty-icon">📁</div>
-        <h3>Aucune playlist</h3>
-        <p>Créez votre première playlist pour organiser vos musiques</p>
+        <h3>No playlist</h3>
+        <p>Create your first playlist to organize your music</p>
       </div>
 
       <div v-else class="playlists-grid">
@@ -47,7 +47,7 @@
             <div class="playlist-meta">
               <span class="meta-item">
                 <span class="meta-icon">🎵</span>
-                {{ playlist.musics?.length || 0 }} titres
+                {{ playlist.musics?.length || 0 }} titles
               </span>
               <span class="meta-item">
                 <span class="meta-icon">📅</span>
@@ -82,17 +82,17 @@
           <div class="playlist-stats">
             <span class="stat">
               <span class="stat-icon">🎵</span>
-              {{ currentPlaylist?.musics?.length || 0 }} musiques
+              {{ currentPlaylist?.musics?.length || 0 }} music
             </span>
             <span class="stat">
               <span class="stat-icon">📅</span>
-              Créée le {{ formatDate(currentPlaylist?.createdAt) }}
+              Created on {{ formatDate(currentPlaylist?.createdAt) }}
             </span>
           </div>
 
           <!-- Musiques de la playlist -->
           <div v-if="currentPlaylist?.musics && currentPlaylist.musics.length > 0" class="playlist-musics">
-            <h3>Liste des titres</h3>
+            <h3>List of titles</h3>
             <div class="musics-list">
               <TrackCard
                 v-for="(music, index) in currentPlaylist.musics"
@@ -109,14 +109,14 @@
             </div>
           </div>
           <div v-else class="empty-playlist">
-            <p>Cette playlist est vide</p>
+            <p>This playlist is empty</p>
           </div>
 
           <!-- Ajouter une musique -->
           <div class="add-music-section">
             <input 
               v-model="newMusicName"
-              placeholder="Rechercher ou ajouter une musique..."
+              placeholder="add music..."
               @keyup.enter="addMusicToPlaylist"
             />
             <button @click="addMusicToPlaylist" class="add-btn">+ Add</button>
@@ -165,23 +165,23 @@ export default {
     getMusicTitle(music) {
       if (typeof music === 'string') return music;
       if (typeof music === 'object') {
-        return music.title || music.music || music.name || 'Titre inconnu';
+        return music.title || music.music || music.name || 'Unknown title';
       }
-      return 'Titre inconnu';
+      return 'Unknown title';
     },
 
     getMusicArtist(music) {
       if (typeof music === 'object') {
-        return music.artist || 'Artiste inconnu';
+        return music.artist || 'Unknown artist';
       }
-      return 'Artiste inconnu';
+      return 'Unknown artist';
     },
 
     getMusicAlbum(music) {
       if (typeof music === 'object') {
-        return music.album || 'Album inconnu';
+        return music.album || 'Unknown Album';
       }
-      return 'Album inconnu';
+      return 'Unknown Album';
     },
 
     async loadPlaylists() {
@@ -190,25 +190,25 @@ export default {
         if (!response.ok) {
           // Essayer avec /api/playlists si /playlists échoue
           const response2 = await fetch('http://localhost:3000/api/playlists');
-          if (!response2.ok) throw new Error('Erreur chargement playlists');
+          if (!response2.ok) throw new Error('Error loading playlists');
           this.playlists = await response2.json();
         } else {
           this.playlists = await response.json();
         }
         
-        console.log('Playlists chargées:', this.playlists);
-        Toast.success('Playlists chargées', 'success');
+        console.log('Playlists loaded:', this.playlists);
+        Toast.success('Playlists loaded', 'success');
       } catch (error) {
         console.error('Erreur chargement playlists:', error);
-        Toast.error('Erreur chargement playlists', 'error');
+        Toast.error('Error loading playlists', 'error');
       }
     },
 
     formatDate(dateString) {
-      if (!dateString) return 'Date inconnue';
+      if (!dateString) return 'Unknown date';
       try {
         const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', {
+        return date.toLocaleDateString('en-US', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric'
@@ -218,10 +218,11 @@ export default {
       }
     },
 
+
     playTrack(track) {
       console.log("Playing track:", track);
       if (!track.preview) {
-        Toast.info("Preview non disponible pour cette piste !");
+        Toast.info("Preview not available for this track !");
         return;
       }
       player.play(track);
@@ -229,7 +230,7 @@ export default {
     async createPlaylist() {
       const name = this.newPlaylistName.trim();
       if (!name) {
-        Toast.error('Veuillez entrer un nom', 'error');
+        Toast.error('Please enter a name', 'error');
         return;
       }
 
@@ -256,7 +257,7 @@ export default {
             })
           });
           
-          if (!response2.ok) throw new Error('Erreur création playlist');
+          if (!response2.ok) throw new Error('Playlist creation error');
           
           const newPlaylist = await response2.json();
           this.playlists.push(newPlaylist);
@@ -266,10 +267,10 @@ export default {
         }
         
         this.newPlaylistName = '';
-        Toast.success(`Playlist "${name}" créée`, 'success');
+        Toast.success(`Playlist "${name}" created`, 'success');
       } catch (error) {
-        console.error('Erreur création playlist:', error);
-        Toast.error('Erreur création playlist', 'error');
+        console.error('Playlist creation error:', error);
+        Toast.error('Playlist creation error', 'error');
       }
     },
 
@@ -292,14 +293,14 @@ export default {
             method: 'DELETE'
           });
           
-          if (!response.ok) throw new Error('Erreur suppression');
+          if (!response.ok) throw new Error('Error deletion');
         }
 
         this.playlists = this.playlists.filter(p => p.id !== playlist.id);
-        Toast.success(`Playlist "${playlist.name}" supprimée`, 'success');
+        Toast.success(`Playlist "${playlist.name}" deleted`, 'success');
       } catch (error) {
-        console.error('Erreur suppression playlist:', error);
-        Toast.error('Erreur suppression playlist', 'error');
+        console.error('Playlist deletion error:', error);
+        Toast.error('Playlist deletion error', 'error');
       }
     },
 
@@ -313,7 +314,7 @@ export default {
           this.currentPlaylist = playlist;
         }
       } catch (err) {
-        console.error('Erreur chargement playlist détail:', err);
+        console.error('Error loading playlist detail:', err);
         this.currentPlaylist = playlist;
       }
       this.showPlaylistModal = true;
@@ -373,10 +374,10 @@ export default {
         }
         
         this.newMusicName = '';
-        Toast.success('Musique ajoutée', 'success');
+        Toast.success('Music added', 'success');
       } catch (error) {
-        console.error('Erreur ajout musique:', error);
-        Toast.error('Erreur ajout musique', 'error');
+        console.error('Error adding music:', error);
+        Toast.error('Error adding music', 'error');
       }
     },
 
@@ -417,14 +418,14 @@ export default {
             })
           });
           
-          if (!response2.ok) throw new Error('Erreur mise à jour playlist');
+          if (!response2.ok) throw new Error('Playlist update error');
         }
         
         this.newMusicName = '';
-        Toast.error('Musique ajoutée', 'success');
+        Toast.error('Music added', 'success');
       } catch (error) {
-        console.error('Erreur mise à jour playlist:', error);
-        Toast.error('Musique ajoutée localement', 'warning');
+        console.error('Playlist update error:', error);
+        Toast.error('Music added locally', 'warning');
       }
     },
 
@@ -480,24 +481,19 @@ export default {
           });
         }
 
-        Toast.success('Musique retirée', 'success');
+        Toast.success('Music removed', 'success');
       } catch (error) {
-        console.error('Erreur suppression musique:', error);
-        Toast.error('Musique retirée localement', 'warning');
+        console.error('Music deletion error:', error);
+        Toast.error('Music removed locally', 'warning');
       }
     },
 
 
-    editPlaylist(playlist) {
-      const newName = prompt('Nouveau nom:', playlist.name);
-      if (newName && newName.trim() !== playlist.name) {
-        this.renamePlaylist(playlist, newName.trim());
-      }
-    },
+
 
     async refreshAll() {
       await this.loadPlaylists();
-      Toast.success('Tout rafraîchi', 'success');
+      Toast.success('All refreshed', 'success');
     },
 
     handleImageError(event) {

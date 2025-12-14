@@ -14,7 +14,7 @@
           :class="{ active: isActive('Accueil') }"
         >
           <span class="icon">🏠</span>
-          <span class="label">Home</span>
+          <span class="label">dashboard</span>
       </router-link>
     </div>
 

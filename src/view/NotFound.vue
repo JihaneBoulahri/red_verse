@@ -15,10 +15,10 @@
       <!-- Text Content -->
       <div class="flex-1 text-center md:text-left">
         <h1 class="text-7xl font-extrabold text-orange-600 mb-3">404</h1>
-        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Page introuvable</h2>
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Page not found</h2>
         <p class="text-gray-500 mb-8">
-          La page que vous cherchez n’existe pas ou a été déplacée.<br />
-          Retournez à l’accueil pour continuer votre navigation.
+          The page you are looking for does not exist or has been moved.<br />
+          Return to the homepage to continue browsing.
         </p>
 
         <!-- Button -->
@@ -26,7 +26,7 @@
           to="/dashboard"
           class="inline-block px-8 py-3 rounded-xl bg-orange-600 text-white font-bold shadow-lg hover:bg-orange-700 transition-all duration-300"
         >
-          Retour à l’accueil
+          Return to home
         </router-link>
       </div>
     </div>

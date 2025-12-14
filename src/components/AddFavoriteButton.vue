@@ -100,7 +100,7 @@ export default {
 
           const data = await response.json();
           Toast.success(`Favorite added: "${this.music}"`);
-          this.favoriteId = data.favorite.id; // récupérer ID nouvellement créé
+          this.favoriteId = data.favorite.id; 
         }
 
         // Émettre un événement vers le parent
@@ -108,8 +108,8 @@ export default {
 
       } catch (error) {
         this.isFavorite = previousState;
-        console.error("Erreur toggle favori:", error);
-        Toast.error(`Erreur: ${error.message}`);
+        console.error("Error toggle favorite:", error);
+        Toast.error(`Error: ${error.message}`);
       } finally {
         this.loading = false;
       }

@@ -45,7 +45,7 @@
     <!-- Loading -->
     <div class="loading-overlay" v-if="isLoading">
       <div class="spinner"></div>
-      <p>Recherche en cours...</p>
+      <p>Research in progress...</p>
     </div>
 
   </div>
@@ -75,7 +75,7 @@ const loadSearchResults = () => {
 
 const playTrack = (track) =>{
   if (!track.preview) {
-    Toast.info("Preview non disponible pour cette piste !");
+    Toast.info("Preview not available for this track !");
     return;
   }
   player.play(track)
